@@ -3,10 +3,10 @@ const ctx = canvas.getContext("2d");
 
 const width = canvas.width;
 const height = canvas.height;
+
 const maxIteration = 1000;
 
-// Generate Mandelbrot set points
-function mandelbrotGenerator() {
+function mandelbrotGenerator(xc = 0, yc = 0, rmul = 1, gmul = 1, bmul = 1) {
   let points = [];
 
   for (let px = 0; px < width; px++) {
@@ -15,8 +15,8 @@ function mandelbrotGenerator() {
       let x0 = (px / width) * (0.47 + 2.0) - 2.0;
       let y0 = (py / height) * (1.12 + 1.12) - 1.12;
 
-      let x = 0;
-      let y = 0;
+      let x = xc;
+      let y = yc;
       let iteration = 0;
 
       while (x * x + y * y <= 4 && iteration < maxIteration) {
@@ -30,9 +30,9 @@ function mandelbrotGenerator() {
       let colorValue =
         iteration === maxIteration
           ? "0,0,0"
-          : `${(iteration * 3) % 256}, 
-          ${(iteration * 2) % 256}, 
-          ${(iteration * 10) % 256}`;
+          : `${(iteration * rmul) % 256}, 
+          ${(iteration * gmul) % 256}, 
+          ${(iteration * bmul) % 256}`;
 
       points.push({ x: px, y: py, color: `(${colorValue})` });
     }
@@ -48,5 +48,25 @@ function plotPoints(points) {
   });
 }
 
-const points = mandelbrotGenerator();
+let points = mandelbrotGenerator();
 plotPoints(points);
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".sidebar button").forEach((button) => {
+    button.addEventListener("click", () => {
+      // Get input values and convert them to numbers
+      const rmul = parseFloat(document.getElementById("r").value) || 1;
+      const gmul = parseFloat(document.getElementById("g").value) || 1;
+      const bmul = parseFloat(document.getElementById("b").value) || 10;
+
+      const xc = parseFloat(document.getElementById("x").value) || 0;
+      const yc = parseFloat(document.getElementById("y").value) || 0;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Generate and plot the new fractal
+      let points = mandelbrotGenerator(xc, yc, rmul, gmul, bmul);
+      plotPoints(points);
+    });
+  });
+});
