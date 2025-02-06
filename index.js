@@ -41,6 +41,41 @@ function mandelbrotGenerator(xc = 0, yc = 0, rmul = 1, gmul = 1, bmul = 1) {
   return points;
 }
 
+function burningShipGenerator(xc = 0, yc = 0, rmul = 1, gmul = 1, bmul = 1) {
+  let points = [];
+
+  for (let px = 0; px < width; px++) {
+    for (let py = 0; py < height; py++) {
+      // Scale pixel coordinate to Burning Ship scale
+      let x0 = (px / width) * (2.5 + 2.0) - 2.0;
+      let y0 = (py / height) * (2.0 + 1.5) - 1.5;
+
+      let x = xc;
+      let y = yc;
+      let iteration = 0;
+
+      while (x * x + y * y <= 4 && iteration < maxIteration) {
+        let xtemp = x * x - y * y + x0;
+        y = Math.abs(2 * x * y) + y0; // Burning Ship uses absolute value
+        x = Math.abs(xtemp); // Absolute value applied to x
+        iteration++;
+      }
+
+      // Convert iteration count to a color
+      let colorValue =
+        iteration === maxIteration
+          ? "0,0,0"
+          : `${(iteration * rmul) % 256}, 
+          ${(iteration * gmul) % 256}, 
+          ${(iteration * bmul) % 256}`;
+
+      points.push({ x: px, y: py, color: `(${colorValue})` });
+    }
+  }
+
+  return points;
+}
+
 function plotPoints(points) {
   points.forEach(({ x, y, color }) => {
     ctx.fillStyle = `rgb${color}`;
