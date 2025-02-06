@@ -83,7 +83,13 @@ function plotPoints(points) {
   });
 }
 
-let points = mandelbrotGenerator();
+let points;
+if (document.title === "Fractalite-Mandelbrot") {
+  points = mandelbrotGenerator();
+} else if (document.title === "Fractalite-BurningShip") {
+  points = burningShipGenerator();
+}
+
 plotPoints(points);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -100,7 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.clearRect(0, 0, width, height);
 
       // Generate and plot the new fractal
-      let points = mandelbrotGenerator(xc, yc, rmul, gmul, bmul);
+
+      if (document.title === "Fractalite-Mandelbrot") {
+        points = mandelbrotGenerator(xc, yc, rmul, gmul, bmul);
+      } else if (document.title === "Fractalite-BurningShip") {
+        points = burningShipGenerator(xc, yc, rmul, gmul, bmul);
+      }
+
       plotPoints(points);
     });
   });
