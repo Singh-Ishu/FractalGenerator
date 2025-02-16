@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
 
-const maxIteration = 1000;
+const maxIteration = 3000;
 
 function mandelbrotGenerator(xc = 0, yc = 0, rmul = 1, gmul = 1, bmul = 1) {
   let points = [];
