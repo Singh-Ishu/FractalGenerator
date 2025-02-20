@@ -9,32 +9,38 @@ const vertexShaderSource = `#version 300 es
 `;
 
 const fragmentShaderSource = `#version 300 es
-  precision highp float;
-  out vec4 outColor;
-  uniform vec2 resolution;
-  uniform vec2 center;
-  uniform float zoom;
-  uniform vec3 colorMultiplier;
-  uniform vec2 z0;
-  
-  void main() {
+precision highp float;
+out vec4 outColor;
+uniform vec2 resolution;
+uniform vec2 center;
+uniform float zoom;
+uniform vec3 colorMultiplier;
+uniform vec2 z0;
+uniform bool insideColorToggle; // New toggle
+
+void main() {
     vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
     vec2 z = z0;
     int maxIteration = 300;
     int i;
     
     for (i = 0; i < maxIteration; i++) {
-      if (dot(z, z) > 4.0) break;
-      z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
+        if (dot(z, z) > 4.0) break;
+        z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
     }
     
     if (i == maxIteration) {
-      outColor = vec4(0.0, 0.0, 0.0, 1.0); // Black for points inside the Mandelbrot Set
+        if (insideColorToggle) {
+            outColor = vec4(1.0, 1.0, 1.0, 1.0); // White inside
+        } else {
+            outColor = vec4(0.0, 0.0, 0.0, 1.0); // Black inside
+        }
     } else {
-      float norm = float(i) / float(maxIteration);
-      outColor = vec4(norm * colorMultiplier, 1.0); // Color for escaping points
+        float norm = float(i) / float(maxIteration);
+        outColor = vec4(norm * colorMultiplier, 1.0);
     }
-  }
+}
+
 `;
 
 function compileShader(gl, source, type) {
@@ -73,6 +79,13 @@ const centerLoc = gl.getUniformLocation(program, "center");
 const zoomLoc = gl.getUniformLocation(program, "zoom");
 const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
 const z0Loc = gl.getUniformLocation(program, "z0");
+const insideColorLoc = gl.getUniformLocation(program, "insideColorToggle");
+gl.uniform1i(insideColorLoc, 0); // Default: black inside
+
+document.querySelector(".switch input").addEventListener("change", (event) => {
+  gl.uniform1i(insideColorLoc, event.target.checked ? 0 : 1);
+  render();
+});
 
 gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
 gl.uniform2f(centerLoc, 0.0, 0.0);
