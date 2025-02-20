@@ -80,7 +80,7 @@ const zoomLoc = gl.getUniformLocation(program, "zoom");
 const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
 const z0Loc = gl.getUniformLocation(program, "z0");
 const insideColorLoc = gl.getUniformLocation(program, "insideColorToggle");
-gl.uniform1i(insideColorLoc, 0); // Default: black inside
+gl.uniform1i(insideColorLoc, 1); // Default: black inside
 
 document.querySelector(".switch input").addEventListener("change", (event) => {
   gl.uniform1i(insideColorLoc, event.target.checked ? 0 : 1);
