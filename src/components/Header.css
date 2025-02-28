@@ -13,6 +13,4 @@ a:active {
 #header-div {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-  position: sticky;
-  top: 0;
 }

@@ -1,21 +1,22 @@
+import { Link, Route, Routes } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
   return (
     <div id="navbar-div">
       <ul>
-        <a href="/pages/Mandelbrot.jsx">
-          <li>Mandelbrot</li>
-        </a>
-        <a href="/pages/Julia.jsx">
-          <li>Julia</li>
-        </a>
-        <a href="/pages/BurningShip.jsx">
-          <li>Burning Ship</li>
-        </a>
-        <a href="/pages/Mandelbulb.jsx">
-          <li>Mandelbulb</li>
-        </a>
+        <li>
+          <Link to="/Mandelbrot">Mandelbrot</Link>
+        </li>
+        <li>
+          <Link to="/Julia">Julia</Link>
+        </li>
+        <li>
+          <Link to="/Burningship">Burning Ship</Link>
+        </li>
+        <li>
+          <Link to="/Mandelbulb">Mandelbulb</Link>
+        </li>
       </ul>
     </div>
   );
