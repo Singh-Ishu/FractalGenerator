@@ -7,9 +7,12 @@ import Julia from "./pages/Julia";
 import BurningShip from "./pages/BurningShip";
 import Mandelbulb from "./pages/MandelBulb";
 
+import Header from "./components/Header";
+
 function App() {
   return (
     <>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Mandelbrot" element={<Mandelbrot />} />

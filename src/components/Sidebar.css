@@ -1,0 +1,18 @@
+.sidebar div {
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 2px 2px 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 25%;
+}
+.sidebar input {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: white;
+  border: 0px;
+}
+.sidebar td {
+  width: 50%;
+}
+.sidebar label {
+  justify-items: center;
+}
