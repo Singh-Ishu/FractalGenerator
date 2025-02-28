@@ -1,15 +1,15 @@
-# Fractal Generator
+# Fractalite
 
-This is a web application that allows you to generate and explore fractals. Currently, it can generate the **Mandelbrot set**, but other fractals will be added soon.
+## The Fractal Generator
 
-## Features
+### What it does?
 
-- **Mandelbrot Set Generation**: Generate and zoom into the Mandelbrot set using your browser.
-- **Color Generation**: The beauty of chaos theory at your finger tips. Now in color.
+Fractalite is an interactive fractal generator that allows users to explore complex mathematical structures such as the Mandelbrot Set, Julia Set, and Burning Ship fractal. It provides dynamic zooming, color customization, and real-time fractal rendering.
 
-## Upcoming Features
+### How it works?
 
-- Other types of fractals (e.g., Julia Set, Burning Ship Fractal, etc.).
-- Enhanced performance for large fractal generations.
-- Color customization for better visualization.
-- **Interactive Interface**: Click to zoom in and explore different parts of the fractal.
+Fractalite utilizes WebGL for GPU-accelerated rendering of fractals. The core computation is handled in fragment shaders, enabling high-performance visualization. The project is currently being refactored into React to improve modularity and maintainability.
+
+---
+
+**Note:** This project is under a major refactor, transitioning to React for better scalability and upgradability.
