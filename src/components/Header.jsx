@@ -3,11 +3,11 @@ import "./Header.css";
 
 export default function Header() {
   return (
-    <>
-      <a href="/pages/Home.jsx">
+    <div id="header-div">
+      <a href="/">
         <h1>Fractalite</h1>
       </a>
       <Navbar />
-    </>
+    </div>
   );
 }
