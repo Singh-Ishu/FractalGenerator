@@ -66,9 +66,9 @@ export default function Sidebar({ onGenerate }) {
                 <label>Inside B/W:</label>
               </td>
               <td>
-                <label class="switch">
-                  <input type="checkbox" />
-                  <span class="slider round"></span>
+                <label className="switch">
+                  <input type="checkbox" id="insideBW" />
+                  <span className="slider round"></span>
                 </label>
               </td>
             </tr>
@@ -77,9 +77,9 @@ export default function Sidebar({ onGenerate }) {
                 <label>Dynamic Colouring:</label>
               </td>
               <td>
-                <label class="switch">
-                  <input type="checkbox" />
-                  <span class="slider round"></span>
+                <label className="switch">
+                  <input type="checkbox" id="dynamicColor" />
+                  <span className="slider round"></span>
                 </label>
               </td>
             </tr>
