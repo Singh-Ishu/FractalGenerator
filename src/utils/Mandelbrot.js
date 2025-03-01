@@ -8,8 +8,8 @@ let centerX = 0.0,
 export default function renderMandelbrot() {
   const canvas = document.getElementById("drawing-board");
   if (!canvas) return;
-  canvas.style.width = "60vw"; // Full width
-  canvas.style.height = "60vh"; // Full height
+  canvas.style.width = "65vw"; // Full width
+  canvas.style.height = "70vh"; // Full height
   canvas.width = window.innerWidth * devicePixelRatio; // Scale for high DPI
   canvas.height = window.innerHeight * devicePixelRatio;
   if (!gl) {
