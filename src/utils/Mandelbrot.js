@@ -37,21 +37,27 @@ export default function renderMandelbrot() {
       uniform float zoom;
       uniform vec3 colorMultiplier;
       uniform vec2 z0;
-
+      
       void main() {
-          vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
-          vec2 z = z0;
-          int maxIteration = 300;
-          int i;
-          
-          for (i = 0; i < maxIteration; i++) {
-              if (dot(z, z) > 4.0) break;
-              z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
-          }
-          
-          float norm = float(i) / float(maxIteration);
-          outColor = vec4(norm * colorMultiplier, 1.0);
-      }
+        vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
+        vec2 z = z0;
+        int maxIteration = 300;
+        int i;
+        
+        for (i = 0; i < maxIteration; i++) {
+            if (dot(z, z) > 4.0) break;
+            z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
+        }
+        
+        if (i == maxIteration) {
+            // Point is inside the Mandelbrot set → BLACK
+            outColor = vec4(0.0, 0.0, 0.0, 1.0);
+        } else {
+            // Escape points get colored
+            float norm = float(i) / float(maxIteration);
+            outColor = vec4(norm * colorMultiplier, 1.0);
+        }
+    }
     `;
 
     function compileShader(gl, source, type) {
