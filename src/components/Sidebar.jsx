@@ -65,50 +65,22 @@ export default function Sidebar({ onGenerate }) {
               <td>
                 <label>Inside B/W:</label>
               </td>
-              <td colSpan="2">
-                <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="inside_bw"
-                      value="yes"
-                      className="toggler"
-                    />
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="inside_bw"
-                      value="no"
-                      className="toggler"
-                    />
-                  </label>
-                </div>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
               </td>
             </tr>
             <tr>
               <td>
                 <label>Dynamic Colouring:</label>
               </td>
-              <td colSpan="2">
-                <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="dynamic_coloring"
-                      value="yes"
-                      className="toggler"
-                    />
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="dynamic_coloring"
-                      value="no"
-                      className="toggler"
-                    />
-                  </label>
-                </div>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" />
+                  <span class="slider round"></span>
+                </label>
               </td>
             </tr>
           </tbody>
