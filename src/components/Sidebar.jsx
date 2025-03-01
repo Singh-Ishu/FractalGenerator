@@ -58,6 +58,63 @@ export default function Sidebar({ onGenerate }) {
         </table>
       </div>
 
+      <div id="specials">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label>Inside B/W:</label>
+              </td>
+              <td colSpan="2">
+                <div className="radio-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="inside_bw"
+                      value="yes"
+                      className="toggler"
+                    />
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="inside_bw"
+                      value="no"
+                      className="toggler"
+                    />
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Dynamic Colouring:</label>
+              </td>
+              <td colSpan="2">
+                <div className="radio-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="dynamic_coloring"
+                      value="yes"
+                      className="toggler"
+                    />
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="dynamic_coloring"
+                      value="no"
+                      className="toggler"
+                    />
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <button onClick={updateFractalParams}>Generate</button>
     </div>
   );
