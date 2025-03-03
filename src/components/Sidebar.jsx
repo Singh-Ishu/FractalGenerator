@@ -72,7 +72,7 @@ export default function Sidebar({ onGenerate }) {
                 </label>
               </td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>
                 <label>Dynamic Colouring:</label>
               </td>
@@ -82,7 +82,7 @@ export default function Sidebar({ onGenerate }) {
                   <span className="slider round"></span>
                 </label>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

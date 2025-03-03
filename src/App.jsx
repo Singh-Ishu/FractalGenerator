@@ -15,7 +15,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Mandelbrot" element={<Mandelbrot />} />
+        <Route path="/FractalGenerator/Mandelbrot" element={<Mandelbrot />} />
         <Route path="/Julia" element={<Julia />} />
         <Route path="/Burningship" element={<BurningShip />} />
         <Route path="/Mandelbulb" element={<Mandelbulb />} />

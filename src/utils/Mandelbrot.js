@@ -1,7 +1,5 @@
-let insideBWLoc, dynamicColorLoc, timeLoc;
+let insideBWLoc;
 let insideBW = false;
-let dynamicColor = false;
-let startTime = Date.now();
 
 let gl = null;
 let program = null;
@@ -53,8 +51,6 @@ export default function renderMandelbrot() {
       uniform vec3 colorMultiplier;
       uniform vec2 z0;
       uniform bool insideBW;
-      uniform bool dynamicColor;
-      uniform float time;
 
       void main() {
           vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
@@ -71,16 +67,7 @@ export default function renderMandelbrot() {
               outColor = insideBW ? vec4(1.0, 1.0, 1.0, 1.0) : vec4(0.0, 0.0, 0.0, 1.0);
           } else {
               float norm = float(i) / float(maxIteration);
-              vec3 color;
-              if (dynamicColor) {
-                  color = vec3(
-                      0.2 + 0.5 * sin(3.0 * norm + time),
-                      0.2 + 0.5 * sin(2.0 * norm + time),
-                      0.2 + 0.5 * sin(4.0 * norm + time)
-                  );
-              } else {
-                  color = norm * colorMultiplier;
-              }
+              vec3 color = norm * colorMultiplier;
               outColor = vec4(color, 1.0);
           }
       }`;
@@ -128,8 +115,6 @@ export default function renderMandelbrot() {
     colorLoc = gl.getUniformLocation(program, "colorMultiplier");
     z0Loc = gl.getUniformLocation(program, "z0");
     insideBWLoc = gl.getUniformLocation(program, "insideBW");
-    dynamicColorLoc = gl.getUniformLocation(program, "dynamicColor");
-    timeLoc = gl.getUniformLocation(program, "time");
   }
 
   gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
@@ -138,11 +123,8 @@ export default function renderMandelbrot() {
   gl.uniform3f(colorLoc, 1.0, 1.0, 1.0);
   gl.uniform2f(z0Loc, 0.0, 0.0);
   gl.uniform1i(insideBWLoc, insideBW);
-  gl.uniform1i(dynamicColorLoc, dynamicColor);
 
   function render() {
-    let elapsed = (Date.now() - startTime) / 1000.0;
-    gl.uniform1f(timeLoc, elapsed);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     requestAnimationFrame(render);
@@ -191,12 +173,10 @@ export function updateFractalParams() {
   const g = parseFloat(document.getElementById("g").value) || 1.0;
   const b = parseFloat(document.getElementById("b").value) || 1.0;
   const insideBW = document.getElementById("insideBW").checked ? 1 : 0;
-  const dynamicColor = document.getElementById("dynamicColor").checked ? 1 : 0;
 
   gl.uniform2f(z0Loc, zr, zi);
   gl.uniform3f(colorLoc, r, g, b);
   gl.uniform1i(insideBWLoc, insideBW);
-  gl.uniform1i(dynamicColorLoc, dynamicColor);
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLES, 0, 6);
