@@ -6,16 +6,16 @@ export default function Navbar() {
     <div id="navbar-div">
       <ul>
         <li>
-          <Link to="/FractalGenerator/Mandelbrot">Mandelbrot</Link>
+          <Link to="/Mandelbrot">Mandelbrot</Link>
         </li>
         <li>
-          <Link to="/FractalGenerator/Julia">Julia</Link>
+          <Link to="Julia">Julia</Link>
         </li>
         <li>
-          <Link to="/FractalGenerator/Burningship">Burning Ship</Link>
+          <Link to="Burningship">Burning Ship</Link>
         </li>
         <li>
-          <Link to="/FractalGenerator/Mandelbulb">Mandelbulb</Link>
+          <Link to="Mandelbulb">Mandelbulb</Link>
         </li>
       </ul>
     </div>

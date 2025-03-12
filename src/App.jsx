@@ -14,11 +14,11 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/FractalGenerator/Home" element={<Home />} />
-        <Route path="/FractalGenerator/Mandelbrot" element={<Mandelbrot />} />
-        <Route path="/FractalGenerator/Julia" element={<Julia />} />
-        <Route path="/FractalGenerator/Burningship" element={<BurningShip />} />
-        <Route path="/FractalGenerator/Mandelbulb" element={<Mandelbulb />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="Mandelbrot" element={<Mandelbrot />} />
+        <Route path="/Julia" element={<Julia />} />
+        <Route path="/Burningship" element={<BurningShip />} />
+        <Route path="/Mandelbulb" element={<Mandelbulb />} />
       </Routes>
     </>
   );
