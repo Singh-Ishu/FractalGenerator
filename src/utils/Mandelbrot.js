@@ -49,24 +49,27 @@ export default function renderMandelbrot() {
       uniform vec2 center;
       uniform float zoom;
       uniform vec3 colorMultiplier;
-      uniform vec2 z0;
       uniform bool insideBW;
 
       void main() {
           vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
-          vec2 z = z0;
+          float x = 0.0, y = 0.0;
+          float x2 = 0.0, y2 = 0.0;
           int maxIteration = 300;
-          int i;
-          
-          for (i = 0; i < maxIteration; i++) {
-              if (dot(z, z) > 4.0) break;
-              z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
+          int iteration = 0;
+
+          while ((x2 + y2 <= 4.0) && (iteration < maxIteration)) {
+              y = 2.0 * x * y + c.y;
+              x = x2 - y2 + c.x;
+              x2 = x * x;
+              y2 = y * y;
+              iteration++;
           }
-          
-          if (i == maxIteration) {
+
+          if (iteration == maxIteration) {
               outColor = insideBW ? vec4(1.0, 1.0, 1.0, 1.0) : vec4(0.0, 0.0, 0.0, 1.0);
           } else {
-              float norm = float(i) / float(maxIteration);
+              float norm = float(iteration) / float(maxIteration);
               vec3 color = norm * colorMultiplier;
               outColor = vec4(color, 1.0);
           }
