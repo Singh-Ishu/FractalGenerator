@@ -72,17 +72,6 @@ export default function Sidebar({ onGenerate }) {
                 </label>
               </td>
             </tr>
-            {/* <tr>
-              <td>
-                <label>Dynamic Colouring:</label>
-              </td>
-              <td>
-                <label className="switch">
-                  <input type="checkbox" id="dynamicColor" />
-                  <span className="slider round"></span>
-                </label>
-              </td>
-            </tr> */}
           </tbody>
         </table>
       </div>

@@ -13,8 +13,8 @@ export default function Mandelbrot() {
 
   return (
     <div id="container">
-      <Sidebar onGenerate={renderMandelbrot} />
-      <canvas id="drawing-board"></canvas>
+      <Sidebar />
+      <canvas id="drawing-board" onLoad={renderMandelbrot()}></canvas>
     </div>
   );
 }
