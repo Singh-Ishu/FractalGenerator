@@ -9,13 +9,13 @@ export default function Navbar() {
           <Link to="/FractalGenerator/Mandelbrot">Mandelbrot</Link>
         </li>
         <li>
-          <Link to="/Julia">Julia</Link>
+          <Link to="/FractalGenerator/Julia">Julia</Link>
         </li>
         <li>
-          <Link to="/Burningship">Burning Ship</Link>
+          <Link to="/FractalGenerator/Burningship">Burning Ship</Link>
         </li>
         <li>
-          <Link to="/Mandelbulb">Mandelbulb</Link>
+          <Link to="/FractalGenerator/Mandelbulb">Mandelbulb</Link>
         </li>
       </ul>
     </div>
