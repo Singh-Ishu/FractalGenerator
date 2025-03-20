@@ -1,5 +1,4 @@
-export default `
-#version 300 es
+export default `#version 300 es
       precision highp float;
       out vec4 outColor;
       uniform vec2 resolution;

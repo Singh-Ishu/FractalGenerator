@@ -1,3 +1,6 @@
+import MandelbrotVert from "./shaders/Mandelbrot-vert";
+import MandelbrotFrag from "./shaders/Mandelbrot-frag";
+
 let insideBWLoc;
 let insideBW = false;
 
@@ -35,14 +38,9 @@ export default function renderMandelbrot() {
   }
 
   if (!program) {
-    const vertexShaderSource = `#version 300 es
-      in vec2 position;
-      void main() {
-        gl_Position = vec4(position, 0.0, 1.0);
-      }
-    `;
+    const vertexShaderSource = MandelbrotVert;
 
-    const fragmentShaderSource = ``;
+    const fragmentShaderSource = MandelbrotFrag;
 
     function compileShader(gl, source, type) {
       const shader = gl.createShader(type);
@@ -139,12 +137,12 @@ export default function renderMandelbrot() {
 }
 
 export function updateFractalParams() {
-  const zr = parseFloat(document.getElementById("zr").value) || 0.0;
-  const zi = parseFloat(document.getElementById("zi").value) || 0.0;
-  const r = parseFloat(document.getElementById("r").value) || 1.0;
-  const g = parseFloat(document.getElementById("g").value) || 1.0;
-  const b = parseFloat(document.getElementById("b").value) || 1.0;
-  const insideBW = document.getElementById("insideBW").checked ? 1 : 0;
+  let zr = parseFloat(document.getElementById("zr").value) || 0.0;
+  let zi = parseFloat(document.getElementById("zi").value) || 0.0;
+  let r = parseFloat(document.getElementById("r").value) || 1.0;
+  let g = parseFloat(document.getElementById("g").value) || 1.0;
+  let b = parseFloat(document.getElementById("b").value) || 1.0;
+  let insideBW = document.getElementById("insideBW").checked ? 1 : 0;
 
   gl.uniform2f(z0Loc, zr, zi);
   gl.uniform3f(colorLoc, r, g, b);
