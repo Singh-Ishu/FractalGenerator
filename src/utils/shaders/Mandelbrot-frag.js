@@ -1,3 +1,4 @@
+export default `
 #version 300 es
       precision highp float;
       out vec4 outColor;
@@ -30,3 +31,4 @@
               outColor = vec4(color, 1.0);
           }
       }
+`;
