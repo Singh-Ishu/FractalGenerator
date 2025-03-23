@@ -13,7 +13,7 @@ export default function Mandelbrot() {
       renderMandelbrot();
       console.log(location);
     }
-  }, [canvasRef, location]);
+  }, [location]);
 
   return (
     <>

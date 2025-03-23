@@ -50,17 +50,3 @@ export default function Mandelbrot() {
     </>
   );
 }
-
-// import Sidebar from "../components/Sidebar";
-
-// export default function Julia() {
-//   return (
-//     <>
-//       <div id="container">
-//         <Sidebar />
-//         <canvas id="drawing-board"></canvas>
-//       </div>
-//
-//     </>
-//   );
-// }
