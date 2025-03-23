@@ -14,7 +14,10 @@ let eventListenersAdded = false;
 
 export default function renderMandelbrot() {
   const canvas = document.getElementById("drawing-board");
-  if (!canvas) return;
+  if (!canvas) {
+    console.log("Canvas Not Found");
+    return;
+  }
 
   function resizeCanvas() {
     canvas.width = window.innerWidth * devicePixelRatio;
@@ -24,8 +27,8 @@ export default function renderMandelbrot() {
     render();
   }
 
-  canvas.style.width = "65vw";
-  canvas.style.height = "70vh";
+  canvas.style.width = "50vw";
+  canvas.style.height = "50vw";
   canvas.width = window.innerWidth * devicePixelRatio;
   canvas.height = window.innerHeight * devicePixelRatio;
 

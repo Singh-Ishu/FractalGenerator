@@ -1,11 +1,31 @@
+import React, { useEffect, useRef } from "react";
 import Sidebar from "../components/Sidebar";
+import "./fractal.css";
+import renderMandelbrot from "../utils/Mandelbrot";
+import { useLocation } from "react-router-dom";
 
-export default function Julia() {
+export default function Mandelbrot() {
+  const canvasRef = useRef(null);
+  let location = useLocation();
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      renderMandelbrot();
+      console.log(location);
+    }
+  }, [canvasRef, location]);
+
   return (
     <>
       <div id="container">
         <Sidebar />
-        <canvas id="drawing-board"></canvas>
+
+        <canvas
+          ref={canvasRef}
+          id="drawing-board"
+          width={800}
+          height={800}
+        ></canvas>
       </div>
       <div>
         <p>
@@ -30,3 +50,17 @@ export default function Julia() {
     </>
   );
 }
+
+// import Sidebar from "../components/Sidebar";
+
+// export default function Julia() {
+//   return (
+//     <>
+//       <div id="container">
+//         <Sidebar />
+//         <canvas id="drawing-board"></canvas>
+//       </div>
+//
+//     </>
+//   );
+// }
