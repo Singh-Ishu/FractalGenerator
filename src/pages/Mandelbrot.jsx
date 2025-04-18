@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "./fractal.css";
 
 import MandelbrotFrag from "../utils/shaders/Mandelbrot-frag";
-import MandelbrotVert from "../utils/shaders/Mandelbrot-vert";
+import MandelbrotVert from "../utils/shaders/vert";
 
 export default function Mandelbrot() {
     window.addEventListener("storage", () => {});
