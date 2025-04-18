@@ -1,6 +1,3 @@
-import MandelbrotVert from "./shaders/Mandelbrot-vert";
-import MandelbrotFrag from "./shaders/Mandelbrot-frag";
-
 let insideBWLoc;
 let insideBW = false;
 
@@ -9,61 +6,63 @@ let program = null;
 let resolutionLoc, centerLoc, zoomLoc, colorLoc, z0Loc;
 let zoom = 4.0;
 let centerX = 0.0,
-  centerY = 0.0;
+    centerY = 0.0;
 let eventListenersAdded = false;
 
 export default function renderMandelbrot() {
-  const canvas = document.getElementById("drawing-board");
-  if (!canvas) {
-    console.log("Canvas Not Found");
-    return;
-  }
+    const canvas = document.getElementById("drawing-board");
+    if (!canvas) {
+        console.log("Canvas Not Found");
+        return;
+    }
 
-  function resizeCanvas() {
+    function resizeCanvas() {
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+        render();
+    }
+
+    canvas.style.width = "50vw";
+    canvas.style.height = "50vw";
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
-    render();
-  }
 
-  canvas.style.width = "50vw";
-  canvas.style.height = "50vw";
-  canvas.width = window.innerWidth * devicePixelRatio;
-  canvas.height = window.innerHeight * devicePixelRatio;
-
-  if (!gl) {
-    gl = canvas.getContext("webgl2");
     if (!gl) {
-      console.error("WebGL2 not supported");
-      return;
+        gl = canvas.getContext("webgl2");
+        if (!gl) {
+            console.error("WebGL2 not supported");
+            return;
+        }
     }
-  }
 
-  if (!program) {
     const vertexShaderSource = MandelbrotVert;
 
     const fragmentShaderSource = MandelbrotFrag;
 
     function compileShader(gl, source, type) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error("Shader compile error: ", gl.getShaderInfoLog(shader));
-      }
-      return shader;
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error(
+                "Shader compile error: ",
+                gl.getShaderInfoLog(shader)
+            );
+        }
+        return shader;
     }
 
     const vertexShader = compileShader(
-      gl,
-      vertexShaderSource,
-      gl.VERTEX_SHADER
+        gl,
+        vertexShaderSource,
+        gl.VERTEX_SHADER
     );
     const fragmentShader = compileShader(
-      gl,
-      fragmentShaderSource,
-      gl.FRAGMENT_SHADER
+        gl,
+        fragmentShaderSource,
+        gl.FRAGMENT_SHADER
     );
 
     program = gl.createProgram();
@@ -73,7 +72,7 @@ export default function renderMandelbrot() {
     gl.useProgram(program);
 
     const vertices = new Float32Array([
-      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+        -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
     ]);
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -88,69 +87,72 @@ export default function renderMandelbrot() {
     colorLoc = gl.getUniformLocation(program, "colorMultiplier");
     z0Loc = gl.getUniformLocation(program, "z0");
     insideBWLoc = gl.getUniformLocation(program, "insideBW");
-  }
 
-  gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
-  gl.uniform2f(centerLoc, centerX, centerY);
-  gl.uniform1f(zoomLoc, zoom);
-  gl.uniform3f(colorLoc, 1.0, 1.0, 1.0);
-  gl.uniform2f(z0Loc, 0.0, 0.0);
-  gl.uniform1i(insideBWLoc, insideBW);
+    gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+    gl.uniform2f(centerLoc, centerX, centerY);
+    gl.uniform1f(zoomLoc, zoom);
+    gl.uniform3f(colorLoc, 1.0, 1.0, 1.0);
+    gl.uniform2f(z0Loc, 0.0, 0.0);
+    gl.uniform1i(insideBWLoc, insideBW);
 
-  function render() {
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(render);
-  }
+    function render() {
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+    }
 
-  render();
+    render();
 
-  if (!eventListenersAdded) {
-    eventListenersAdded = true;
-    window.addEventListener("resize", resizeCanvas);
+    if (!eventListenersAdded) {
+        eventListenersAdded = true;
+        window.addEventListener("resize", resizeCanvas);
 
-    canvas.addEventListener("wheel", (event) => {
-      zoom *= event.deltaY > 0 ? 1.1 : 0.9;
-      gl.uniform1f(zoomLoc, zoom);
-      render();
-    });
+        canvas.addEventListener("wheel", (event) => {
+            zoom *= event.deltaY > 0 ? 1.1 : 0.9;
+            gl.uniform1f(zoomLoc, zoom);
+            render();
+        });
 
-    canvas.addEventListener("mousedown", (event) => {
-      let startX = event.clientX;
-      let startY = event.clientY;
+        canvas.addEventListener("mousedown", (event) => {
+            let startX = event.clientX;
+            let startY = event.clientY;
 
-      function onMouseMove(e) {
-        centerX += ((startX - e.clientX) / canvas.width) * zoom;
-        centerY -= ((startY - e.clientY) / canvas.height) * zoom;
-        gl.uniform2f(centerLoc, centerX, centerY);
-        render();
-        startX = e.clientX;
-        startY = e.clientY;
-      }
+            function onMouseMove(e) {
+                centerX += ((startX - e.clientX) / canvas.width) * zoom;
+                centerY -= ((startY - e.clientY) / canvas.height) * zoom;
+                gl.uniform2f(centerLoc, centerX, centerY);
+                render();
+                startX = e.clientX;
+                startY = e.clientY;
+            }
 
-      function onMouseUp() {
-        canvas.removeEventListener("mousemove", onMouseMove);
-        canvas.removeEventListener("mouseup", onMouseUp);
-      }
+            function onMouseUp() {
+                canvas.removeEventListener("mousemove", onMouseMove);
+                canvas.removeEventListener("mouseup", onMouseUp);
+            }
 
-      canvas.addEventListener("mousemove", onMouseMove);
-      canvas.addEventListener("mouseup", onMouseUp);
-    });
-  }
+            canvas.addEventListener("mousemove", onMouseMove);
+            canvas.addEventListener("mouseup", onMouseUp);
+        });
+    }
 }
 
 export function updateFractalParams() {
-  let zr = parseFloat(document.getElementById("zr").value) || 0.0;
-  let zi = parseFloat(document.getElementById("zi").value) || 0.0;
-  let r = parseFloat(document.getElementById("r").value) || 1.0;
-  let g = parseFloat(document.getElementById("g").value) || 1.0;
-  let b = parseFloat(document.getElementById("b").value) || 1.0;
-  let insideBW = document.getElementById("insideBW").checked ? 1 : 0;
+    console.log("Update Fractal Parameter Called");
+    let zr = parseFloat(document.getElementById("zr").value) || 0.0;
+    let zi = parseFloat(document.getElementById("zi").value) || 0.0;
+    let r = parseFloat(document.getElementById("r").value) || 1.0;
+    let g = parseFloat(document.getElementById("g").value) || 1.0;
+    let b = parseFloat(document.getElementById("b").value) || 1.0;
+    let insideBW = document.getElementById("insideBW").checked ? 1 : 0;
 
-  gl.uniform2f(z0Loc, zr, zi);
-  gl.uniform3f(colorLoc, r, g, b);
-  gl.uniform1i(insideBWLoc, insideBW);
+    const fractalSettings = { zr, zi, r, g, b, insideBW };
+    localStorage.setItem("fractalSettings", JSON.stringify(fractalSettings));
 
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    // gl.uniform2f(z0Loc, zr, zi);
+    // gl.uniform3f(colorLoc, r, g, b);
+    // gl.uniform1i(insideBWLoc, insideBW);
+
+    // gl.clear(gl.COLOR_BUFFER_BIT);
+    // gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
