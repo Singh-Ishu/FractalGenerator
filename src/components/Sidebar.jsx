@@ -13,6 +13,7 @@ export default function Sidebar({ onGenerate }) {
         };
 
         localStorage.setItem("fractal2dparams", JSON.stringify(params));
+        window.dispatchEvent(new Event("fractal2dparams-update"));
 
         // Optional: call a callback if needed (like re-rendering)
         if (onGenerate) {

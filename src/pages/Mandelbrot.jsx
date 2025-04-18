@@ -18,9 +18,9 @@ export default function Mandelbrot() {
             alert("WebGL2 not supported");
             return;
         }
+
         glRef.current = gl;
 
-        // Compile shaders
         const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
         const fragShader = compileShader(
             gl,
@@ -31,7 +31,7 @@ export default function Mandelbrot() {
         programRef.current = program;
         gl.useProgram(program);
 
-        // Set up fullscreen quad
+        // Set up full screen triangle
         const positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
         gl.bufferData(
@@ -44,16 +44,14 @@ export default function Mandelbrot() {
         gl.enableVertexAttribArray(positionLoc);
         gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
 
-        renderFractal(); // initial render
+        renderFractal(); // Initial render
 
-        // Listen to changes from localStorage (when "Generate" is clicked)
-        window.addEventListener("storage", () => {
-            renderFractal();
-        });
+        // Listen for updates
+        window.addEventListener("fractal2dparams-update", renderFractal);
 
-        // Cleanup on unmount
+        // Clean up on unmount
         return () => {
-            window.removeEventListener("storage", renderFractal);
+            window.removeEventListener("fractal2dparams-update", renderFractal);
         };
     }, []);
 
