@@ -7,7 +7,7 @@ import MandelbrotVert from "../utils/shaders/vert"; // Using the same vertex sha
 
 import { compileShader, createProgram } from "../utils/Helpers";
 
-export default function JuliaSet() {
+export default function Julia() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
