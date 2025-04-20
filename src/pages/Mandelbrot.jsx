@@ -9,8 +9,70 @@ export default function Mandelbrot() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
+    const zoomRef = useRef(2.5); // Initial zoom level
+    const centerRef = useRef({ x: 0.0, y: 0.0 });
+    const draggingRef = useRef(false);
+    const startPosRef = useRef({ x: 0, y: 0 });
 
-    // Initialize WebGL, compile shaders, etc.
+    // Helper function to compile a shader
+    function compileShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
+    }
+
+    // Helper function to create a program
+    function createProgram(gl, vertShader, fragShader) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vertShader);
+        gl.attachShader(program, fragShader);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error(gl.getProgramInfoLog(program));
+            return null;
+        }
+        return program;
+    }
+
+    function renderFractal() {
+        const gl = glRef.current;
+        const program = programRef.current;
+        if (!gl || !program) return;
+
+        gl.useProgram(program);
+        const params =
+            JSON.parse(localStorage.getItem("fractal2dparams")) || {};
+
+        // Set uniforms
+        const resLoc = gl.getUniformLocation(program, "resolution");
+        const centerLoc = gl.getUniformLocation(program, "center");
+        const zoomLoc = gl.getUniformLocation(program, "zoom");
+        const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
+        const insideBWLoc = gl.getUniformLocation(program, "insideBW");
+        const zrLoc = gl.getUniformLocation(program, "juliaC");
+
+        const canvas = gl.canvas;
+
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(resLoc, canvas.width, canvas.height);
+        gl.uniform2f(centerLoc, centerRef.current.x, centerRef.current.y);
+        gl.uniform1f(zoomLoc, zoomRef.current);
+
+        gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
+        gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
+        gl.uniform2f(zrLoc, params.zr || 0, params.zi || 0);
+
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
+
     useEffect(() => {
         const canvas = canvasRef.current;
         const gl = canvas.getContext("webgl2");
@@ -49,68 +111,56 @@ export default function Mandelbrot() {
         // Listen for updates
         window.addEventListener("fractal2dparams-update", renderFractal);
 
+        // Zoom functionality
+        const handleWheel = (event) => {
+            const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
+            zoomRef.current *= zoomFactor;
+            renderFractal();
+        };
+
+        canvas.addEventListener("wheel", handleWheel);
+
+        // Panning functionality
+        const handleMouseDown = (event) => {
+            draggingRef.current = true;
+            startPosRef.current = { x: event.clientX, y: event.clientY };
+            canvas.style.cursor = "grabbing";
+        };
+
+        const handleMouseMove = (event) => {
+            if (!draggingRef.current) return;
+
+            const deltaX = event.clientX - startPosRef.current.x;
+            const deltaY = event.clientY - startPosRef.current.y;
+
+            centerRef.current.x -= (deltaX / canvas.width) * zoomRef.current;
+            centerRef.current.y += (deltaY / canvas.height) * zoomRef.current; // Invert Y for correct direction
+
+            renderFractal();
+
+            startPosRef.current = { x: event.clientX, y: event.clientY };
+        };
+
+        const handleMouseUp = () => {
+            draggingRef.current = false;
+            canvas.style.cursor = "default";
+        };
+
+        canvas.addEventListener("mousedown", handleMouseDown);
+        canvas.addEventListener("mousemove", handleMouseMove);
+        canvas.addEventListener("mouseup", handleMouseUp);
+        canvas.addEventListener("mouseout", handleMouseUp); // Stop dragging if mouse leaves canvas
+
         // Clean up on unmount
         return () => {
             window.removeEventListener("fractal2dparams-update", renderFractal);
+            canvas.removeEventListener("wheel", handleWheel);
+            canvas.removeEventListener("mousedown", handleMouseDown);
+            canvas.removeEventListener("mousemove", handleMouseMove);
+            canvas.removeEventListener("mouseup", handleMouseUp);
+            canvas.removeEventListener("mouseout", handleMouseUp);
         };
     }, []);
-
-    function renderFractal() {
-        const gl = glRef.current;
-        const program = programRef.current;
-        if (!gl || !program) return;
-
-        gl.useProgram(program);
-        const params =
-            JSON.parse(localStorage.getItem("fractal2dparams")) || {};
-
-        // Set uniforms
-        const resLoc = gl.getUniformLocation(program, "resolution");
-        const centerLoc = gl.getUniformLocation(program, "center");
-        const zoomLoc = gl.getUniformLocation(program, "zoom");
-        const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
-        const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const zrLoc = gl.getUniformLocation(program, "juliaC");
-
-        const canvas = gl.canvas;
-
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.uniform2f(centerLoc, 0.0, 0.0); // you can make this interactive
-        gl.uniform1f(zoomLoc, 2.5); // same here
-
-        gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
-        gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
-        gl.uniform2f(zrLoc, params.zr || 0, params.zi || 0);
-
-        gl.clearColor(0, 0, 0, 1);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
-    function compileShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            console.error(gl.getShaderInfoLog(shader));
-            gl.deleteShader(shader);
-            return null;
-        }
-        return shader;
-    }
-
-    function createProgram(gl, vertShader, fragShader) {
-        const program = gl.createProgram();
-        gl.attachShader(program, vertShader);
-        gl.attachShader(program, fragShader);
-        gl.linkProgram(program);
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            console.error(gl.getProgramInfoLog(program));
-            return null;
-        }
-        return program;
-    }
 
     return (
         <>
@@ -119,8 +169,8 @@ export default function Mandelbrot() {
                 <canvas
                     ref={canvasRef}
                     id="drawing-board"
-                    width={800}
-                    height={800}
+                    width={1200}
+                    height={650}
                 ></canvas>
             </div>
             <div>
