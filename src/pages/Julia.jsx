@@ -178,8 +178,8 @@ export default function JuliaSet() {
                 <canvas
                     ref={canvasRef}
                     id="drawing-board"
-                    width={800}
-                    height={800}
+                    width={1200}
+                    height={400}
                     style={{ cursor: "grab" }}
                 ></canvas>
             </div>

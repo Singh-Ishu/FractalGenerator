@@ -146,7 +146,7 @@ export default function Mandelbrot() {
                     ref={canvasRef}
                     id="drawing-board"
                     width={1200}
-                    height={650}
+                    height={400}
                 ></canvas>
             </div>
             <div>
