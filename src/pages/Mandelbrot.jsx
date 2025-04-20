@@ -5,6 +5,8 @@ import "./fractal.css";
 import MandelbrotFrag from "../utils/shaders/Mandelbrot-frag";
 import MandelbrotVert from "../utils/shaders/vert";
 
+import { compileShader, createProgram } from "../utils/Helpers";
+
 export default function Mandelbrot() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
@@ -13,32 +15,6 @@ export default function Mandelbrot() {
     const centerRef = useRef({ x: 0.0, y: 0.0 });
     const draggingRef = useRef(false);
     const startPosRef = useRef({ x: 0, y: 0 });
-
-    // Helper function to compile a shader
-    function compileShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            console.error(gl.getShaderInfoLog(shader));
-            gl.deleteShader(shader);
-            return null;
-        }
-        return shader;
-    }
-
-    // Helper function to create a program
-    function createProgram(gl, vertShader, fragShader) {
-        const program = gl.createProgram();
-        gl.attachShader(program, vertShader);
-        gl.attachShader(program, fragShader);
-        gl.linkProgram(program);
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            console.error(gl.getProgramInfoLog(program));
-            return null;
-        }
-        return program;
-    }
 
     function renderFractal() {
         const gl = glRef.current;
