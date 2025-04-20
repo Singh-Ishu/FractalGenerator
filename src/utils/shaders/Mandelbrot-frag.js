@@ -6,10 +6,12 @@ export default `#version 300 es
       uniform float zoom;
       uniform vec3 colorMultiplier;
       uniform bool insideBW;
+      uniform vec2 initialZ;
 
       void main() {
           vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
-          float x = 0.0, y = 0.0;
+          float x = initialZ.x;
+          float y = initialZ.y;
           float x2 = 0.0, y2 = 0.0;
           int maxIteration = 300;
           int iteration = 0;

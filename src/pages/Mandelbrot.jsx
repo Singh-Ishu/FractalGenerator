@@ -31,8 +31,7 @@ export default function Mandelbrot() {
         const zoomLoc = gl.getUniformLocation(program, "zoom");
         const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
         const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const zrLoc = gl.getUniformLocation(program, "juliaC");
-
+        const initialZLoc = gl.getUniformLocation(program, "initialZ");
         const canvas = gl.canvas;
 
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -42,7 +41,11 @@ export default function Mandelbrot() {
 
         gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
         gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
-        gl.uniform2f(zrLoc, params.zr || 0, params.zi || 0);
+        gl.uniform2f(
+            initialZLoc,
+            parseFloat(params.zr) || 0.0,
+            parseFloat(params.zi) || 0.0
+        );
 
         gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -89,12 +92,13 @@ export default function Mandelbrot() {
 
         // Zoom functionality
         const handleWheel = (event) => {
+            event.preventDefault(); // Prevent default scrolling behavior
             const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
             zoomRef.current *= zoomFactor;
             renderFractal();
         };
 
-        canvas.addEventListener("wheel", handleWheel);
+        canvas.addEventListener("wheel", handleWheel, { passive: false });
 
         // Panning functionality
         const handleMouseDown = (event) => {
