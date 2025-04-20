@@ -57,6 +57,10 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
+            <div className="inner-text-sidebar">
+                {" "}
+                The z-values only affect the Mandelbrot Set.
+            </div>
             <div id="Julia-Calculation">
                 <table>
                     <tbody>
@@ -89,7 +93,10 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-
+            <div className="inner-text-sidebar">
+                {" "}
+                The c-values only affect the Julia Set.
+            </div>
             <div id="Fractal-Appearance">
                 <table>
                     <tbody>
@@ -135,7 +142,6 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-
             <div id="specials">
                 <table>
                     <tbody>
@@ -153,7 +159,6 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-
             <button onClick={saveFractalParamsToLocalStorage}>Generate</button>
         </div>
     );
