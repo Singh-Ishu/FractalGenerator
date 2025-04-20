@@ -55,6 +55,38 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
+            <div id="Julia-Calculation">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label htmlFor="cr">C(r)</label>
+                            </td>
+                            <td>
+                                <input
+                                    type="number"
+                                    id="cr"
+                                    name="cr"
+                                    placeholder="-0.8"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label htmlFor="ci">C(i)</label>
+                            </td>
+                            <td>
+                                <input
+                                    type="number"
+                                    id="ci"
+                                    name="ci"
+                                    placeholder="0.156"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div id="Fractal-Appearance">
                 <table>
