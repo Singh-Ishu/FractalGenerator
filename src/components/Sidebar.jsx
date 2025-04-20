@@ -23,7 +23,7 @@ export default function Sidebar({ onGenerate }) {
 
     return (
         <div className="sidebar">
-            <div id="Fractal-Calculation">
+            <div id="Mandelbrot-Calculation">
                 <table>
                     <tbody>
                         <tr>
