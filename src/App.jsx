@@ -10,18 +10,18 @@ import Mandelbulb from "./pages/MandelBulb";
 import Header from "./components/Header";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="Mandelbrot" element={<Mandelbrot />} />
-        <Route path="/Julia" element={<Julia />} />
-        <Route path="/Burningship" element={<BurningShip />} />
-        <Route path="/Mandelbulb" element={<Mandelbulb />} />
-      </Routes>
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/Mandelbrot" element={<Mandelbrot />} />
+                <Route path="/Julia" element={<Julia />} />
+                <Route path="/Burningship" element={<BurningShip />} />
+                <Route path="/Mandelbulb" element={<Mandelbulb />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;
