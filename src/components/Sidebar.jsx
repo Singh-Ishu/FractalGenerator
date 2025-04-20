@@ -6,6 +6,8 @@ export default function Sidebar({ onGenerate }) {
         const params = {
             zr: parseFloat(document.getElementById("zr").value) || 0,
             zi: parseFloat(document.getElementById("zi").value) || 0,
+            cr: parseFloat(document.getElementById("cr").value) || -0.8,
+            ci: parseFloat(document.getElementById("ci").value) || 0.156,
             r: parseFloat(document.getElementById("r").value) || 1,
             g: parseFloat(document.getElementById("g").value) || 1,
             b: parseFloat(document.getElementById("b").value) || 1,
