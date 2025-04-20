@@ -5,15 +5,52 @@ import "./fractal.css";
 import JuliaFrag from "../utils/shaders/Julia-frag";
 import MandelbrotVert from "../utils/shaders/vert"; // Using the same vertex shader
 
+import { compileShader, createProgram } from "../utils/Helpers";
+
 export default function JuliaSet() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
+    const zoomRef = useRef(2.5); // Initial zoom level
+    const centerRef = useRef({ x: 0.0, y: 0.0 });
+    const draggingRef = useRef(false);
+    const startPosRef = useRef({ x: 0, y: 0 });
 
-    const [center, setCenter] = useState({ x: 0.0, y: 0.0 });
-    const [zoom, setZoom] = useState(2.5);
-    const [isDragging, setIsDragging] = useState(false);
-    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    function renderFractal() {
+        const gl = glRef.current;
+        const program = programRef.current;
+        if (!gl || !program) return;
+
+        gl.useProgram(program);
+        const params =
+            JSON.parse(localStorage.getItem("fractal2dparams")) || {};
+
+        // Set uniforms
+        const resLoc = gl.getUniformLocation(program, "resolution");
+        const centerLoc = gl.getUniformLocation(program, "center");
+        const zoomLoc = gl.getUniformLocation(program, "zoom");
+        const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
+        const insideBWLoc = gl.getUniformLocation(program, "insideBW");
+        const juliaCLoc = gl.getUniformLocation(program, "juliaC");
+        const canvas = gl.canvas;
+
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(resLoc, canvas.width, canvas.height);
+        gl.uniform2f(centerLoc, centerRef.current.x, centerRef.current.y);
+        gl.uniform1f(zoomLoc, zoomRef.current);
+
+        gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
+        gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
+        gl.uniform2f(
+            juliaCLoc,
+            parseFloat(params.cr) || -0.8,
+            parseFloat(params.ci) || 0.156
+        );
+
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -46,51 +83,49 @@ export default function JuliaSet() {
 
         renderFractal(); // Initial render
 
-        // Listen for updates from the sidebar
+        // Listen for updates
         window.addEventListener("fractal2dparams-update", renderFractal);
 
-        // Handle zooming with the mouse wheel
+        // Zoom functionality
         const handleWheel = (event) => {
-            event.preventDefault(); // Prevent default scrolling
-            const zoomFactor = event.deltaY > 0 ? 0.9 : 1.1;
-            setZoom((prevZoom) => prevZoom * zoomFactor);
+            event.preventDefault(); // Prevent default scrolling behavior
+            const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
+            zoomRef.current *= zoomFactor;
+            renderFractal();
         };
 
         canvas.addEventListener("wheel", handleWheel, { passive: false });
 
-        // Handle panning with mouse drag
+        // Panning functionality
         const handleMouseDown = (event) => {
-            setIsDragging(true);
-            setDragStart({ x: event.clientX, y: event.clientY });
+            draggingRef.current = true;
+            startPosRef.current = { x: event.clientX, y: event.clientY };
             canvas.style.cursor = "grabbing";
         };
 
         const handleMouseMove = (event) => {
-            if (!isDragging) return;
-            const deltaX = event.clientX - dragStart.x;
-            const deltaY = event.clientY - dragStart.y;
+            if (!draggingRef.current) return;
 
-            // Convert pixel movement to complex plane movement
-            const moveX = (deltaX / canvas.width) * zoom;
-            const moveY = (deltaY / canvas.height) * zoom;
+            const deltaX = event.clientX - startPosRef.current.x;
+            const deltaY = event.clientY - startPosRef.current.y;
 
-            setCenter((prevCenter) => ({
-                x: prevCenter.x - moveX,
-                y: prevCenter.y + moveY, // Invert Y because screen Y goes down, complex Y goes up
-            }));
+            centerRef.current.x -= (deltaX / canvas.width) * zoomRef.current;
+            centerRef.current.y += (deltaY / canvas.height) * zoomRef.current; // Invert Y for correct direction
 
-            setDragStart({ x: event.clientX, y: event.clientY });
+            renderFractal();
+
+            startPosRef.current = { x: event.clientX, y: event.clientY };
         };
 
         const handleMouseUp = () => {
-            setIsDragging(false);
-            canvas.style.cursor = "grab";
+            draggingRef.current = false;
+            canvas.style.cursor = "default";
         };
 
         canvas.addEventListener("mousedown", handleMouseDown);
         canvas.addEventListener("mousemove", handleMouseMove);
         canvas.addEventListener("mouseup", handleMouseUp);
-        canvas.addEventListener("mouseout", handleMouseUp); // End drag if mouse leaves canvas
+        canvas.addEventListener("mouseout", handleMouseUp); // Stop dragging if mouse leaves canvas
 
         // Clean up on unmount
         return () => {
@@ -101,75 +136,7 @@ export default function JuliaSet() {
             canvas.removeEventListener("mouseup", handleMouseUp);
             canvas.removeEventListener("mouseout", handleMouseUp);
         };
-    }, []); // Empty dependency array to run only once on mount
-
-    // Re-render the fractal whenever center or zoom changes
-    useEffect(() => {
-        renderFractal();
-    }, [center, zoom]);
-
-    function renderFractal() {
-        const gl = glRef.current;
-        const program = programRef.current;
-        if (!gl || !program) return;
-
-        gl.useProgram(program);
-        const params =
-            JSON.parse(localStorage.getItem("fractal2dparams")) || {};
-
-        // Set uniforms
-        const resLoc = gl.getUniformLocation(program, "resolution");
-        const centerLoc = gl.getUniformLocation(program, "center");
-        const zoomLoc = gl.getUniformLocation(program, "zoom");
-        const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
-        const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const juliaCLoc = gl.getUniformLocation(program, "juliaC");
-
-        const canvas = gl.canvas;
-        const aspectRatio = canvas.width / canvas.height;
-
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.uniform2f(centerLoc, center.x * aspectRatio, center.y); // Adjust center for aspect ratio
-        gl.uniform1f(zoomLoc, zoom);
-
-        gl.uniform3f(
-            colorLoc,
-            params.r || 1.0,
-            params.g || 1.0,
-            params.b || 1.0
-        ); // Default to white if not provided
-        gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
-        gl.uniform2f(juliaCLoc, params.zr || 0.285, params.zi || 0.01); // Default Julia constant
-
-        gl.clearColor(0, 0, 0, 1);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
-    function compileShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            console.error(gl.getShaderInfoLog(shader));
-            gl.deleteShader(shader);
-            return null;
-        }
-        return shader;
-    }
-
-    function createProgram(gl, vertShader, fragShader) {
-        const program = gl.createProgram();
-        gl.attachShader(program, vertShader);
-        gl.attachShader(program, fragShader);
-        gl.linkProgram(program);
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            console.error(gl.getProgramInfoLog(program));
-            return null;
-        }
-        return program;
-    }
+    }, []);
 
     return (
         <>
