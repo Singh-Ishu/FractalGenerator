@@ -9,7 +9,10 @@ export default `#version 300 es
     uniform bool insideBW;
 
     void main() {
-        vec2 c = (gl_FragCoord.xy / resolution - 0.5) * zoom + center;
+        vec2 c = vec2(
+    (gl_FragCoord.x / resolution.x - 0.5) * zoom + center.x,
+    -(gl_FragCoord.y / resolution.y - 0.5) * zoom + center.y
+);
         float x = 0.0;
         float y = 0.0;
         float x2 = 0.0;
