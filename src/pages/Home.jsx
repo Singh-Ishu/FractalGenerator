@@ -1,27 +1,24 @@
+import "./Home.css";
+
 export default function Home() {
-  return (
-    <>
-      <div>
-        <h1> Welcome to the world of Fractals</h1>
-        <p>
-          Fractals are infinitely complex patterns that repeat at different
-          scales, often found in nature, mathematics, and computer graphics.
-          They emerge from simple mathematical formulas, yet produce stunningly
-          intricate designs. This website allows you to explore and visualize
-          some of the most famous fractals, such as the Mandelbrot Set, Julia
-          Set, Burning Ship, and Mandelbulb, all rendered in real time using
-          WebGL.
-          <br />
-          Unlike traditional pixel-based rendering, this site leverages GPU
-          acceleration to generate fractals dynamically, ensuring smooth{" "}
-          <i>(atleast ideally)</i> navigation and deep zooming without
-          performance drops. Whether you're here to admire the beauty of
-          fractals or analyze their mathematical properties, this interactive
-          experience brings them to life with high precision and speed. Dive in,
-          experiment with parameters, and uncover the mesmerizing world of
-          infinite complexity!
-        </p>
-      </div>
-    </>
-  );
+    return (
+        <div className="Home-container-div">
+            <div className="Home-text-block">
+                <p>
+                    <span id="span-1">Fractalite</span> is a digital canvas
+                    built with the power of WebGL to render breathtakingly
+                    intricate fractal art. This interactive explorer unveils the
+                    captivating beauty of self-similar yet endlessly
+                    non-repeating patterns, bringing these mathematical wonders
+                    to life on your screen. Conceived as an educational tool,
+                    Fractalite aims to illuminate the fascinating principles
+                    behind these complex structures. More than just a generator,
+                    this is my love-letter to these stunning visuals, intricate
+                    patterns, & unmatched natural beauty inviting you to
+                    discover the inherent artistry within mathematical
+                    equations.
+                </p>
+            </div>
+        </div>
+    );
 }
