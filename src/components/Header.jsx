@@ -3,10 +3,12 @@ import "./Header.css";
 
 export default function Header() {
     return (
-        <div id="header-div">
-            <Link to="/">
-                <h1>Fractalite</h1>
-            </Link>
+        <div id="header-container-div">
+            <div id="header-div">
+                <Link to="/">
+                    <h1>Fractalite</h1>
+                </Link>
+            </div>
             <div id="navbar-div">
                 <ul>
                     <li>
@@ -18,6 +20,7 @@ export default function Header() {
                     <li>
                         <Link to="/Burningship">Burning Ship</Link>
                     </li>
+                    <li />
                     <li>
                         <Link to="/Mandelbulb">Mandelbulb</Link>
                     </li>
