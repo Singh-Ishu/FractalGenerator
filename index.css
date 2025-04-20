@@ -1,8 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     color: white;
-    background: #0f2027; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
-    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    background-image: url("./src/assets/Backdrop.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 #header {
