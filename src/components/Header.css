@@ -1,21 +1,26 @@
 #header-div h1 {
-    font-size: 5em;
+    font-size: 7em;
     justify-self: left;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    align-items: top;
+    font-family: "Great Vibes", "Brush Script MT", cursive;
 }
 
 a:link,
 a:visited,
-a:hover,
 a:active {
     color: white;
     text-decoration: none;
+    font-family: "Great Vibes", "Brush Script MT", cursive;
+}
+
+a:hover {
+    color: wheat;
 }
 
 #header-container-div {
     display: grid;
     grid-template-columns: auto 1fr;
-    align-items: baseline;
+    align-items: top;
     padding: 10px 20px;
     margin-bottom: 1.5%;
 }
