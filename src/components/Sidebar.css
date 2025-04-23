@@ -80,7 +80,7 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-.inner-text-sidebar {
+.sidebar-inner-text {
     font-family: "Courier New", Courier, monospace;
     background-color: rgba(0, 0, 0, 0);
 }

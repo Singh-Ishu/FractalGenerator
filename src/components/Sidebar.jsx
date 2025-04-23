@@ -57,7 +57,7 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-            <p className="inner-text-sidebar">
+            <p className="sidebar-inner-text">
                 The z-values only affect the Mandelbrot Set.
             </p>
             <div id="Julia-Calculation">
@@ -140,7 +140,7 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-            <div id="specials">
+            <div id="sidebar-specials">
                 <table>
                     <tbody>
                         <tr>

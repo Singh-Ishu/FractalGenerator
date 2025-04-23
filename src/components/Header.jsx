@@ -9,7 +9,7 @@ export default function Header() {
                     <h1>Fractalite</h1>
                 </Link>
             </div>
-            <div id="navbar-div">
+            <div id="header-navbar-div">
                 <ul>
                     <li>
                         <Link to="/Mandelbrot">Mandelbrot</Link>
