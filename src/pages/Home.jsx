@@ -1,4 +1,7 @@
 import "./Home.css";
+import ApollonianGasketWhite from "../assets/ApollonianGasketWhite.png";
+import HomeCollageFractalite from "../assets/Home_Collage_Fractalite.png";
+import HistoryOfFractals from "../assets/HistoryofFractals.png";
 
 export default function Home() {
     return (
@@ -7,10 +10,7 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img
-                    src="src/assets/Home_Collage_Fractalite.png"
-                    width={"80%"}
-                />
+                <img src={HomeCollageFractalite} width={"80%"} />
             </div>
             <div className="Home-text-block" id="home-text1">
                 <h2>What's Fractalite?</h2>
@@ -55,13 +55,13 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src="src/assets/ApollonianGasketWhite.png" width={"80%"} />
+                <img src={ApollonianGasketWhite} width={"80%"} />
             </div>
             <div
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src="src/assets/HistoryofFractals.png" width={"80%"} />
+                <img src={HistoryOfFractals} width={"80%"} />
             </div>
             <div className="Home-text-block" id="home-text3">
                 <h2>The History of Fractals</h2>
