@@ -12,17 +12,17 @@ export default function Header() {
             <div id="header-navbar-div">
                 <ul>
                     <li>
-                        <Link to="/Mandelbrot">Mandelbrot</Link>
+                        <Link to="/2D/Mandelbrot">Mandelbrot</Link>
                     </li>
                     <li>
-                        <Link to="/Julia">Julia</Link>
+                        <Link to="/2D/Julia">Julia</Link>
                     </li>
                     <li>
-                        <Link to="/Burningship">Burning Ship</Link>
+                        <Link to="/2D/Burningship">Burning Ship</Link>
                     </li>
                     <li />
                     <li>
-                        <Link to="/Mandelbulb">Mandelbulb</Link>
+                        <Link to="/3D/Mandelbulb">Mandelbulb</Link>
                     </li>
                 </ul>
             </div>

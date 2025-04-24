@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import "./fractal.css";
+import React, { useEffect, useRef } from "react";
+import Sidebar from "../../../components/Sidebar";
+import "../../fractal.css";
 
-import BurningFrag from "../utils/shaders/Burningship-frag";
-import MandelbrotVert from "../utils/shaders/vert"; // Using the same vertex shader
+import MandelbrotFrag from "../../../utils/shaders/Mandelbrot-frag";
+import MandelbrotVert from "../../../utils/shaders/vert";
 
-import { compileShader, createProgram } from "../utils/Helpers";
+import { compileShader, createProgram } from "../../../utils/Helpers";
 
-export default function Burningship() {
+export default function Mandelbrot() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
@@ -31,15 +31,21 @@ export default function Burningship() {
         const zoomLoc = gl.getUniformLocation(program, "zoom");
         const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
         const insideBWLoc = gl.getUniformLocation(program, "insideBW");
+        const initialZLoc = gl.getUniformLocation(program, "initialZ");
         const canvas = gl.canvas;
 
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.uniform2f(centerLoc, centerRef.current.x, -centerRef.current.y);
+        gl.uniform2f(centerLoc, centerRef.current.x, centerRef.current.y);
         gl.uniform1f(zoomLoc, zoomRef.current);
 
         gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
         gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
+        gl.uniform2f(
+            initialZLoc,
+            parseFloat(params.zr) || 0.0,
+            parseFloat(params.zi) || 0.0
+        );
 
         gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -57,7 +63,11 @@ export default function Burningship() {
         glRef.current = gl;
 
         const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
-        const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, BurningFrag);
+        const fragShader = compileShader(
+            gl,
+            gl.FRAGMENT_SHADER,
+            MandelbrotFrag
+        );
         const program = createProgram(gl, vertShader, fragShader);
         programRef.current = program;
         gl.useProgram(program);
@@ -141,30 +151,26 @@ export default function Burningship() {
                     id="drawing-board"
                     width={1200}
                     height={400}
-                    style={{ cursor: "grab" }}
                 ></canvas>
             </div>
             <div>
                 <p>
-                    The <strong>Burning Ship fractal</strong> is a chaotic and
-                    mesmerizing fractal variation that follows a modification of
-                    the Mandelbrot equation. Instead of using the standard
-                    complex squaring operation, it applies absolute values to
-                    the real and imaginary components separately:
-                </p>
-                <p>
-                    z<sub>n+1</sub> = (|Re(z<sub>n</sub>)| + i |Im(z<sub>n</sub>
-                    )|)
-                    <sup>2</sup> + c
-                </p>
-                <p>
-                    This small tweak results in a fractal with a{" "}
-                    <strong>sharp, jagged, ship-like appearance</strong>, in
-                    contrast to the smooth curves of the Mandelbrot Set. The
-                    fractal often resembles a turbulent seascape, giving it the
-                    name "Burning Ship." By zooming into different regions, one
-                    can uncover a landscape of branching structures and
-                    intricate, chaotic formations.
+                    The Mandelbrot Set is one of the most famous fractals, known
+                    for its infinite complexity and self-repeating patterns. It
+                    is generated using a simple mathematical formula:{" "}
+                    <b>
+                        z<sub>n+1</sub> = z<sub>n</sub>
+                        <sup>2</sup> + c
+                    </b>{" "}
+                    where z and c are complex numbers.
+                    <br />
+                    By iterating this equation and tracking how fast the values
+                    escape to infinity, we can visualize the intricate and
+                    mesmerizing structures of the Mandelbrot Set. This page
+                    renders the Mandelbrot Set using WebGL, allowing for smooth
+                    zooming and real-time interaction. Explore deeper, and
+                    you'll discover endless variations of patterns hidden within
+                    the fractal, revealing nature's deep mathematical beauty.
                 </p>
             </div>
         </>

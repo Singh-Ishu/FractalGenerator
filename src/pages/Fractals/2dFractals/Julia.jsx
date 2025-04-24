@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import Sidebar from "../components/Sidebar";
-import "./fractal.css";
+import React, { useEffect, useRef, useState } from "react";
+import Sidebar from "../../../components/Sidebar";
+import "../../fractal.css";
 
-import MandelbrotFrag from "../utils/shaders/Mandelbrot-frag";
-import MandelbrotVert from "../utils/shaders/vert";
+import JuliaFrag from "../../../utils/shaders/Julia-frag";
+import MandelbrotVert from "../../../utils/shaders/vert"; // Using the same vertex shader
 
-import { compileShader, createProgram } from "../utils/Helpers";
+import { compileShader, createProgram } from "../../../utils/Helpers";
 
-export default function Mandelbrot() {
+export default function Julia() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
@@ -31,7 +31,7 @@ export default function Mandelbrot() {
         const zoomLoc = gl.getUniformLocation(program, "zoom");
         const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
         const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const initialZLoc = gl.getUniformLocation(program, "initialZ");
+        const juliaCLoc = gl.getUniformLocation(program, "juliaC");
         const canvas = gl.canvas;
 
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -42,9 +42,9 @@ export default function Mandelbrot() {
         gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
         gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
         gl.uniform2f(
-            initialZLoc,
-            parseFloat(params.zr) || 0.0,
-            parseFloat(params.zi) || 0.0
+            juliaCLoc,
+            parseFloat(params.cr) || -0.8,
+            parseFloat(params.ci) || 0.156
         );
 
         gl.clearColor(0, 0, 0, 1);
@@ -63,11 +63,7 @@ export default function Mandelbrot() {
         glRef.current = gl;
 
         const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
-        const fragShader = compileShader(
-            gl,
-            gl.FRAGMENT_SHADER,
-            MandelbrotFrag
-        );
+        const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, JuliaFrag);
         const program = createProgram(gl, vertShader, fragShader);
         programRef.current = program;
         gl.useProgram(program);
@@ -151,26 +147,29 @@ export default function Mandelbrot() {
                     id="drawing-board"
                     width={1200}
                     height={400}
+                    style={{ cursor: "grab" }}
                 ></canvas>
             </div>
             <div>
                 <p>
-                    The Mandelbrot Set is one of the most famous fractals, known
-                    for its infinite complexity and self-repeating patterns. It
-                    is generated using a simple mathematical formula:{" "}
-                    <b>
-                        z<sub>n+1</sub> = z<sub>n</sub>
-                        <sup>2</sup> + c
-                    </b>{" "}
-                    where z and c are complex numbers.
-                    <br />
-                    By iterating this equation and tracking how fast the values
-                    escape to infinity, we can visualize the intricate and
-                    mesmerizing structures of the Mandelbrot Set. This page
-                    renders the Mandelbrot Set using WebGL, allowing for smooth
-                    zooming and real-time interaction. Explore deeper, and
-                    you'll discover endless variations of patterns hidden within
-                    the fractal, revealing nature's deep mathematical beauty.
+                    The <strong>Julia Set</strong> is a family of fractals
+                    closely related to the Mandelbrot Set. Unlike the Mandelbrot
+                    Set, which explores whether a complex number remains bounded
+                    when iterated, the Julia Set visualizes the behavior of{" "}
+                    <strong>individual complex numbers</strong> under similar
+                    iterative transformations. The general formula used is:
+                </p>
+                <p>
+                    z<sub>n+1</sub> = z<sub>n</sub>
+                    <sup>2</sup> + c
+                </p>
+                <p>
+                    where <i>c</i> is a fixed complex constant. Different values
+                    of <i>c</i> generate vastly different Julia Sets, some
+                    appearing connected and others fragmented into intricate
+                    dust-like structures. This visualization allows users to
+                    explore how slight changes in parameters lead to strikingly
+                    different patterns.
                 </p>
             </div>
         </>

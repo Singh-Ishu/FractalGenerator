@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import "./fractal.css";
+import Sidebar from "../../../components/Sidebar";
+import "../../fractal.css";
 
-import JuliaFrag from "../utils/shaders/Julia-frag";
-import MandelbrotVert from "../utils/shaders/vert"; // Using the same vertex shader
+import BurningFrag from "../../../utils/shaders/Burningship-frag";
+import MandelbrotVert from "../../../utils/shaders/vert"; // Using the same vertex shader
 
-import { compileShader, createProgram } from "../utils/Helpers";
+import { compileShader, createProgram } from "../../../utils/Helpers";
 
-export default function Julia() {
+export default function Burningship() {
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
@@ -31,21 +31,15 @@ export default function Julia() {
         const zoomLoc = gl.getUniformLocation(program, "zoom");
         const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
         const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const juliaCLoc = gl.getUniformLocation(program, "juliaC");
         const canvas = gl.canvas;
 
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.uniform2f(centerLoc, centerRef.current.x, centerRef.current.y);
+        gl.uniform2f(centerLoc, centerRef.current.x, -centerRef.current.y);
         gl.uniform1f(zoomLoc, zoomRef.current);
 
         gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
         gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
-        gl.uniform2f(
-            juliaCLoc,
-            parseFloat(params.cr) || -0.8,
-            parseFloat(params.ci) || 0.156
-        );
 
         gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT);
@@ -63,7 +57,7 @@ export default function Julia() {
         glRef.current = gl;
 
         const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
-        const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, JuliaFrag);
+        const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, BurningFrag);
         const program = createProgram(gl, vertShader, fragShader);
         programRef.current = program;
         gl.useProgram(program);
@@ -152,24 +146,25 @@ export default function Julia() {
             </div>
             <div>
                 <p>
-                    The <strong>Julia Set</strong> is a family of fractals
-                    closely related to the Mandelbrot Set. Unlike the Mandelbrot
-                    Set, which explores whether a complex number remains bounded
-                    when iterated, the Julia Set visualizes the behavior of{" "}
-                    <strong>individual complex numbers</strong> under similar
-                    iterative transformations. The general formula used is:
+                    The <strong>Burning Ship fractal</strong> is a chaotic and
+                    mesmerizing fractal variation that follows a modification of
+                    the Mandelbrot equation. Instead of using the standard
+                    complex squaring operation, it applies absolute values to
+                    the real and imaginary components separately:
                 </p>
                 <p>
-                    z<sub>n+1</sub> = z<sub>n</sub>
+                    z<sub>n+1</sub> = (|Re(z<sub>n</sub>)| + i |Im(z<sub>n</sub>
+                    )|)
                     <sup>2</sup> + c
                 </p>
                 <p>
-                    where <i>c</i> is a fixed complex constant. Different values
-                    of <i>c</i> generate vastly different Julia Sets, some
-                    appearing connected and others fragmented into intricate
-                    dust-like structures. This visualization allows users to
-                    explore how slight changes in parameters lead to strikingly
-                    different patterns.
+                    This small tweak results in a fractal with a{" "}
+                    <strong>sharp, jagged, ship-like appearance</strong>, in
+                    contrast to the smooth curves of the Mandelbrot Set. The
+                    fractal often resembles a turbulent seascape, giving it the
+                    name "Burning Ship." By zooming into different regions, one
+                    can uncover a landscape of branching structures and
+                    intricate, chaotic formations.
                 </p>
             </div>
         </>
