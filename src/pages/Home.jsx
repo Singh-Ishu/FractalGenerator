@@ -55,7 +55,7 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src="" width={"80%"} />
+                <img src="src/assets/ApollonianGasketWhite.png" width={"80%"} />
             </div>
             <div
                 className="Home-image-block"
