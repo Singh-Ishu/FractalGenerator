@@ -3,6 +3,16 @@ import "./Home.css";
 export default function Home() {
     return (
         <div className="Home-container-div">
+            <div
+                className="Home-image-block"
+                id="Home-fractalite-image-collage"
+            >
+                <img
+                    src="src/assets/Home_Collage_Fractalite.png"
+                    width={"80%"}
+                    className="home-image"
+                />
+            </div>
             <div className="Home-text-block" id="home-text1">
                 <h2>What's Fractalite?</h2>
                 <p>
@@ -41,6 +51,24 @@ export default function Home() {
                     physical systems—like snowflakes, mountain ranges, and even
                     blood vessels.
                 </p>
+            </div>
+            <div
+                className="Home-image-block"
+                id="Home-fractalite-image-collage"
+            >
+                <img
+                    src="src/assets/Home_Collage_Fractalite.png"
+                    width={"80%"}
+                />
+            </div>
+            <div
+                className="Home-image-block"
+                id="Home-fractalite-image-collage"
+            >
+                <img
+                    src="src/assets/Home_Collage_Fractalite.png"
+                    width={"80%"}
+                />
             </div>
             <div className="Home-text-block" id="home-text3">
                 <h2>The History of Fractals</h2>

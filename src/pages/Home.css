@@ -1,5 +1,8 @@
 .Home-container-div {
     margin-top: 25px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto auto;
 }
 
 .Home-text-block {
@@ -11,8 +14,7 @@
 
     padding: 10px 25px;
     margin: 25px 25px 10px 10px;
-
-    width: 40%;
+    align-self: center;
 
     font-family: "Crimson Pro", "Times New Roman", serif;
     font-size: 1.6em;
@@ -31,6 +33,12 @@
 }
 .home-ul li:hover {
     color: goldenrod;
+}
+
+.Home-image-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h2 {
