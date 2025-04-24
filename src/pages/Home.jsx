@@ -10,7 +10,6 @@ export default function Home() {
                 <img
                     src="src/assets/Home_Collage_Fractalite.png"
                     width={"80%"}
-                    className="home-image"
                 />
             </div>
             <div className="Home-text-block" id="home-text1">
@@ -56,19 +55,13 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img
-                    src="src/assets/Home_Collage_Fractalite.png"
-                    width={"80%"}
-                />
+                <img src="" width={"80%"} />
             </div>
             <div
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img
-                    src="src/assets/Home_Collage_Fractalite.png"
-                    width={"80%"}
-                />
+                <img src="src/assets/HistoryofFractals.png" width={"80%"} />
             </div>
             <div className="Home-text-block" id="home-text3">
                 <h2>The History of Fractals</h2>
