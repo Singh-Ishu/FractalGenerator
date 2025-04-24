@@ -92,7 +92,7 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-            <p className="inner-text-sidebar">
+            <p className="sidebar-inner-text">
                 The c-values only affect the Julia Set.
             </p>
             <div id="Fractal-Appearance">
@@ -157,7 +157,12 @@ export default function Sidebar({ onGenerate }) {
                     </tbody>
                 </table>
             </div>
-            <button onClick={saveFractalParamsToLocalStorage}>Generate</button>
+            <button
+                onClick={saveFractalParamsToLocalStorage}
+                id="sidebar-button"
+            >
+                Generate
+            </button>
         </div>
     );
 }
