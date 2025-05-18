@@ -2,7 +2,7 @@ import Card from "../components/Card";
 
 export default function Fractals2d() {
     return (
-        <>
+        <div className="card-carousel">
             <Card
                 Name="Mandelbrot"
                 Equation={1}
@@ -18,6 +18,6 @@ export default function Fractals2d() {
                 Equation={1}
                 Image_URL={"src/assets/PlainBurningShip.png"}
             />
-        </>
+        </div>
     );
 }
