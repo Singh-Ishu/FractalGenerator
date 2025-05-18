@@ -19,7 +19,7 @@ a:hover {
 
 #header-container-div {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr 1fr;
     align-items: top;
     padding: 10px 20px;
     margin-bottom: 1.5%;
