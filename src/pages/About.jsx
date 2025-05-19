@@ -6,16 +6,16 @@ export default function About() {
         <div className="about-container">
             <h1>About Fractalite</h1>
             <p>
-                About Fractalite Fractalite is a digital canvas that harnesses
-                the raw power of WebGL to weave breathtakingly intricate fractal
-                art before your eyes. This interactive explorer unveils the
-                mesmerizing beauty of self-similar, endlessly non-repeating
-                patterns, transforming abstract mathematical equations into
-                vibrant, living tapestries on your screen. From the hypnotic
-                swirls of 2D classics like the Mandelbrot Set to the
-                mind-bending organic complexity of 3D fractals like the
-                Mandelbulb, Fractalite brings these mathematical wonders to life
-                with stunning clarity and real-time interactivity.
+                Fractalite is a digital canvas that harnesses the raw power of
+                WebGL to weave breathtakingly intricate fractal art before your
+                eyes. This interactive explorer unveils the mesmerizing beauty
+                of self-similar, endlessly non-repeating patterns, transforming
+                abstract mathematical equations into vibrant, living tapestries
+                on your screen. From the hypnotic swirls of 2D classics like the
+                Mandelbrot Set to the mind-bending organic complexity of 3D
+                fractals like the Mandelbulb, Fractalite brings these
+                mathematical wonders to life with stunning clarity and real-time
+                interactivity.
             </p>
             <p>
                 Conceived as an educational tool, Fractalite is more than a
