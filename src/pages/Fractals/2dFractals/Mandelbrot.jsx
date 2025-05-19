@@ -3,7 +3,7 @@ import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
 import MandelbrotFrag from "../../../utils/shaders/Mandelbrot-frag";
-import MandelbrotVert from "../../../utils/shaders/vert";
+import AllVert from "../../../utils/shaders/vert";
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
@@ -62,7 +62,7 @@ export default function Mandelbrot() {
 
         glRef.current = gl;
 
-        const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
+        const vertShader = compileShader(gl, gl.VERTEX_SHADER, AllVert);
         const fragShader = compileShader(
             gl,
             gl.FRAGMENT_SHADER,

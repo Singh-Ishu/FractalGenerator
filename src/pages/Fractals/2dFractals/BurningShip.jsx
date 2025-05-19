@@ -3,7 +3,7 @@ import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
 import BurningFrag from "../../../utils/shaders/Burningship-frag";
-import MandelbrotVert from "../../../utils/shaders/vert"; // Using the same vertex shader
+import AllVert from "../../../utils/shaders/vert"; // Using the same vertex shader
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
@@ -56,7 +56,7 @@ export default function Burningship() {
 
         glRef.current = gl;
 
-        const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
+        const vertShader = compileShader(gl, gl.VERTEX_SHADER, AllVert);
         const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, BurningFrag);
         const program = createProgram(gl, vertShader, fragShader);
         programRef.current = program;

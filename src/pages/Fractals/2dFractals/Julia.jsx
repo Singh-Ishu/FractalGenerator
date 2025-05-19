@@ -3,7 +3,7 @@ import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
 import JuliaFrag from "../../../utils/shaders/Julia-frag";
-import MandelbrotVert from "../../../utils/shaders/vert"; // Using the same vertex shader
+import AllVert from "../../../utils/shaders/vert"; // Using the same vertex shader
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
@@ -62,7 +62,7 @@ export default function Julia() {
 
         glRef.current = gl;
 
-        const vertShader = compileShader(gl, gl.VERTEX_SHADER, MandelbrotVert);
+        const vertShader = compileShader(gl, gl.VERTEX_SHADER, AllVert);
         const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, JuliaFrag);
         const program = createProgram(gl, vertShader, fragShader);
         programRef.current = program;
