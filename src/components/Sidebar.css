@@ -87,6 +87,7 @@ input:checked + .slider:before {
 }
 
 .sidebar-inner-text {
+    margin: 0;
     font-family: "Courier New", Courier, monospace;
     background-color: rgba(0, 0, 0, 0);
 }

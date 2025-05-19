@@ -79,3 +79,8 @@ body {
 canvas {
     margin-left: 15px;
 }
+
+h1 {
+    font-family: Helvetica, sans-serif;
+    font-size: 3em;
+}
