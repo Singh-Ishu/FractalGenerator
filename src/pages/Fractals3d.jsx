@@ -1,3 +1,9 @@
+import Card from "../components/Card";
+
 export default function Fractals3d() {
-    return <></>;
+    return (
+        <>
+            <Card Name={"Mandelbulb"} />
+        </>
+    );
 }
