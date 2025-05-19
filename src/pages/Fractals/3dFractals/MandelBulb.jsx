@@ -173,7 +173,7 @@ export default function Mandelbulb() {
                     height={400}
                 ></canvas>
             </div>
-            <div>
+            <div className="fractal-info">
                 <p>
                     The Mandelbulb is a three-dimensional fractal, extending the
                     Mandelbrot Set into 3D space. It is generated using a

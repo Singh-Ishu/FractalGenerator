@@ -150,7 +150,7 @@ export default function Julia() {
                     style={{ cursor: "grab" }}
                 ></canvas>
             </div>
-            <div>
+            <div className="fractal-info">
                 <p>
                     The <strong>Julia Set</strong> is a family of fractals
                     closely related to the Mandelbrot Set. Unlike the Mandelbrot

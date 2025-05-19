@@ -144,7 +144,7 @@ export default function Burningship() {
                     style={{ cursor: "grab" }}
                 ></canvas>
             </div>
-            <div>
+            <div className="fractal-info">
                 <p>
                     The <strong>Burning Ship fractal</strong> is a chaotic and
                     mesmerizing fractal variation that follows a modification of

@@ -153,7 +153,7 @@ export default function Mandelbrot() {
                     height={400}
                 ></canvas>
             </div>
-            <div>
+            <div className="fractal-info">
                 <p>
                     The Mandelbrot Set is one of the most famous fractals, known
                     for its infinite complexity and self-repeating patterns. It
