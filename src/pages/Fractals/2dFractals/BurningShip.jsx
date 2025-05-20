@@ -134,7 +134,7 @@ export default function Burningship() {
 
     return (
         <>
-            <div id="container">
+            <div className="fractal-page-container">
                 <Sidebar />
                 <canvas
                     ref={canvasRef}

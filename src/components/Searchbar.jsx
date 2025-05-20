@@ -1,27 +1,42 @@
+/**
+ * Searchbar component that provides search functionality across the application.
+ * Includes autocomplete suggestions and navigation to matching pages.
+ */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SearchBar.css";
+import "./Searchbar.css";
 
-const SearchBar = () => {
+/**
+ * Available pages configuration for search functionality
+ * @type {Array<{name: string, path: string}>}
+ */
+const AVAILABLE_PAGES = [
+    { name: "Home", path: "/" },
+    { name: "2D Fractals", path: "/2d" },
+    { name: "3D Fractals", path: "/3d" },
+    { name: "About", path: "/about" },
+    { name: "Mandelbrot", path: "/2d/mandelbrot" },
+    { name: "Julia", path: "/2d/julia" },
+    { name: "Burning Ship", path: "/2d/burning-ship" },
+    { name: "Mandelbulb", path: "/3d/mandelbulb" },
+];
+
+/**
+ * Searchbar component that provides search and navigation functionality
+ * @returns {JSX.Element} The searchbar component with suggestions
+ */
+const Searchbar = () => {
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
 
-    // List of available pages with their display names and paths
-    const pages = [
-        { name: "Home", path: "/" },
-        { name: "2D Fractals", path: "/2D" },
-        { name: "3D Fractals", path: "/3D" },
-        { name: "About", path: "/About" },
-        { name: "Mandelbrot", path: "/2D/Mandelbrot" },
-        { name: "Julia", path: "/2D/Julia" },
-        { name: "Burning Ship", path: "/2D/Burningship" },
-        { name: "Mandelbulb", path: "/3D/Mandelbulb" },
-    ];
-
-    // Handle input change
-    const handleInputChange = (e) => {
-        const value = e.target.value;
+    /**
+     * Handles input changes and updates suggestions
+     * @param {React.ChangeEvent<HTMLInputElement>} event - The input change event
+     */
+    const handleInputChange = (event) => {
+        const value = event.target.value;
         setQuery(value);
 
         if (value.trim() === "") {
@@ -29,24 +44,29 @@ const SearchBar = () => {
             return;
         }
 
-        // Filter pages based on query
-        const filtered = pages.filter((page) =>
+        const filtered = AVAILABLE_PAGES.filter((page) =>
             page.name.toLowerCase().includes(value.toLowerCase())
         );
         setSuggestions(filtered);
     };
 
-    // Handle suggestion click
+    /**
+     * Handles suggestion click and navigates to the selected page
+     * @param {string} path - The path to navigate to
+     */
     const handleSuggestionClick = (path) => {
         setQuery("");
         setSuggestions([]);
         navigate(path);
     };
 
-    // Handle form submission (e.g., pressing Enter)
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const matchedPage = pages.find(
+    /**
+     * Handles form submission and navigates to exact matches
+     * @param {React.FormEvent<HTMLFormElement>} event - The form submission event
+     */
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const matchedPage = AVAILABLE_PAGES.find(
             (page) => page.name.toLowerCase() === query.toLowerCase()
         );
         if (matchedPage) {
@@ -57,23 +77,25 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="search-bar-container">
-            <form onSubmit={handleSubmit}>
+        <div className="searchbar">
+            <form onSubmit={handleSubmit} className="searchbar__form">
                 <input
                     type="text"
                     value={query}
                     onChange={handleInputChange}
                     placeholder="Search..."
-                    className="search-bar-input"
+                    className="searchbar__input"
+                    aria-label="Search pages"
                 />
             </form>
+            
             {suggestions.length > 0 && (
-                <ul className="suggestions-list">
+                <ul className="searchbar__suggestions">
                     {suggestions.map((page) => (
                         <li
                             key={page.path}
                             onClick={() => handleSuggestionClick(page.path)}
-                            className="suggestion-item"
+                            className="searchbar__suggestion-item"
                         >
                             {page.name}
                         </li>
@@ -84,4 +106,4 @@ const SearchBar = () => {
     );
 };
 
-export default SearchBar;
+export default Searchbar;

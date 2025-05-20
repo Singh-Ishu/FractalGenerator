@@ -140,7 +140,7 @@ export default function Julia() {
 
     return (
         <>
-            <div id="container">
+            <div className="fractal-page-container">
                 <Sidebar />
                 <canvas
                     ref={canvasRef}

@@ -144,7 +144,7 @@ export default function Mandelbrot() {
 
     return (
         <>
-            <div id="container">
+            <div className="fractal-page-container">
                 <Sidebar />
                 <canvas
                     ref={canvasRef}
