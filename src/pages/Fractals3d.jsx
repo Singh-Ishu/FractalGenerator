@@ -14,7 +14,7 @@ const FRACTALS_3D = [
     {
         name: "Mandelbulb",
         equation: "z_n+1 = z_n^8 + c",
-        imageUrl: "src/assets/mandelbulb.png",
+        imageUrl: "src/assets/PlainMandelbulb.png",
         path: "/3d/mandelbulb"
     },
     {
