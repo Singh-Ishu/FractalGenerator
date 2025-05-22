@@ -5,7 +5,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-Ready-blue)]
 
 <div align="center">
-  <img src="assets/Preview.png" alt="Fractalite Preview" width="600"/>
+  <img src="src/assets/Preview.png" alt="Fractalite Preview" width="600"/>
 </div>
 
 ## 🌟 Overview
@@ -27,8 +27,8 @@ Fractalite is a powerful, interactive fractal generator that brings the beauty o
 
 - **Customization Options**
   - Color palette customization
-  - Iteration depth control
-  - Resolution settings
+  - Iteration depth control (Upcoming)
+  - Resolution settings (Upcoming)
   - Export high-quality images
 
 - **Performance**
@@ -73,7 +73,7 @@ npm run dev
    - Iteration depth
    - Color scheme
    - Resolution
-4. Export your creation using the save button
+4. Export your creation by right clicking on the canvas and selecting save image
 
 
 
