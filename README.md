@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![WebGL](https://img.shields.io/badge/WebGL-Enabled-blue)](https://get.webgl.org/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-Ready-blue)]
+
 
 <div align="center">
   <img src="src/assets/Preview.png" alt="Fractalite Preview" width="600"/>
