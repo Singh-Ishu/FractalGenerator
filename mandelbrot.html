@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandelbrot Fractal - WebGL vs Canvas2D</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: monospace;
+        background: #1a1a1a;
+        color: #fff;
+      }
+      #comparison {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      #comparison h2 {
+        margin: 0 0 10px 0;
+        color: #4caf50;
+      }
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 5px 0;
+      }
+      .stat-item {
+        min-width: 200px;
+      }
+      .webgl {
+        color: #4caf50;
+      }
+      .canvas2d {
+        color: #ff9800;
+      }
+      .winner {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+      #container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .canvas-wrapper {
+        text-align: center;
+      }
+      .canvas-wrapper h3 {
+        margin: 0 0 10px 0;
+      }
+      canvas {
+        border: 1px solid #444;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="comparison">
+      <h2>Performance Comparison</h2>
+      <div class="stats-row">
+        <div class="stat-item webgl">WebGL (GPU)</div>
+        <div class="stat-item canvas2d">Canvas 2D (CPU)</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">Frame: <span id="webgl-frame">0</span> ms</div>
+        <div class="stat-item">Frame: <span id="canvas-frame">0</span> ms</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">FPS: <span id="webgl-fps">0</span></div>
+        <div class="stat-item">FPS: <span id="canvas-fps">0</span></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          Best Frame: <span id="webgl-best">∞</span> ms
+        </div>
+        <div class="stat-item">
+          Best Frame: <span id="canvas-best">∞</span> ms
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">Peak FPS: <span id="webgl-peak">0</span></div>
+        <div class="stat-item">Peak FPS: <span id="canvas-peak">0</span></div>
+      </div>
+      <div style="margin-top: 10px">
+        Zoom: <span id="zoom">1.0</span>x | Iterations:
+        <span id="iterations">100</span>
+      </div>
+    </div>
+    <div id="container">
+      <div class="canvas-wrapper">
+        <h3 class="webgl">WebGL</h3>
+        <canvas id="webgl-canvas" width="600" height="450"></canvas>
+      </div>
+      <div class="canvas-wrapper">
+        <h3 class="canvas2d">Canvas 2D</h3>
+        <canvas id="canvas2d-canvas" width="600" height="450"></canvas>
+      </div>
+    </div>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+      attribute vec2 position;
+      void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+      }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+      precision highp float;
+      uniform vec2 resolution;
+      uniform vec2 center;
+      uniform float zoom;
+      uniform int maxIterations;
+
+      vec3 getColor(int iterations) {
+          if (iterations == maxIterations) {
+              return vec3(0.0, 0.0, 0.0);
+          }
+          float t = float(iterations) / float(maxIterations);
+          return vec3(
+              0.5 + 0.5 * cos(3.0 + t * 6.28318 + 0.0),
+              0.5 + 0.5 * cos(3.0 + t * 6.28318 + 2.0),
+              0.5 + 0.5 * cos(3.0 + t * 6.28318 + 4.0)
+          );
+      }
+
+      void main() {
+          vec2 uv = (gl_FragCoord.xy - resolution * 0.5) / min(resolution.x, resolution.y);
+          vec2 c = center + uv * zoom;
+
+          vec2 z = vec2(0.0);
+          int iterations = 0;
+
+          for (int i = 0; i < 1000; i++) {
+              if (i >= maxIterations) break;
+              if (dot(z, z) > 4.0) break;
+
+              z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
+              iterations = i;
+          }
+
+          gl_FragColor = vec4(getColor(iterations), 1.0);
+      }
+    </script>
+
+    <script>
+      // WebGL Setup
+      const webglCanvas = document.getElementById("webgl-canvas");
+      const gl = webglCanvas.getContext("webgl");
+
+      if (!gl) {
+        alert("WebGL not supported");
+      }
+
+      function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = createShader(
+        gl,
+        gl.VERTEX_SHADER,
+        document.getElementById("vertex-shader").text
+      );
+      const fragmentShader = createShader(
+        gl,
+        gl.FRAGMENT_SHADER,
+        document.getElementById("fragment-shader").text
+      );
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+      }
+
+      gl.useProgram(program);
+
+      const positions = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+      const positionLocation = gl.getAttribLocation(program, "position");
+      gl.enableVertexAttribArray(positionLocation);
+      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+      const resolutionLocation = gl.getUniformLocation(program, "resolution");
+      const centerLocation = gl.getUniformLocation(program, "center");
+      const zoomLocation = gl.getUniformLocation(program, "zoom");
+      const maxIterationsLocation = gl.getUniformLocation(
+        program,
+        "maxIterations"
+      );
+
+      // Canvas 2D Setup
+      const canvas2d = document.getElementById("canvas2d-canvas");
+      const ctx = canvas2d.getContext("2d");
+      const imageData = ctx.createImageData(canvas2d.width, canvas2d.height);
+
+      function getColor(iterations, maxIter) {
+        if (iterations === maxIter) return [0, 0, 0];
+        const t = iterations / maxIter;
+        return [
+          Math.floor(127.5 + 127.5 * Math.cos(3.0 + t * 6.28318)),
+          Math.floor(127.5 + 127.5 * Math.cos(3.0 + t * 6.28318 + 2.0)),
+          Math.floor(127.5 + 127.5 * Math.cos(3.0 + t * 6.28318 + 4.0)),
+        ];
+      }
+
+      function mandelbrot2D(centerX, centerY, zoom, maxIter) {
+        const width = canvas2d.width;
+        const height = canvas2d.height;
+        const data = imageData.data;
+
+        for (let py = 0; py < height; py++) {
+          for (let px = 0; px < width; px++) {
+            const x = (px - width * 0.5) / Math.min(width, height);
+            const y = (py - height * 0.5) / Math.min(width, height);
+            const cx = centerX + x * zoom;
+            const cy = centerY + y * zoom;
+
+            let zx = 0,
+              zy = 0;
+            let iterations = 0;
+
+            while (iterations < maxIter && zx * zx + zy * zy < 4) {
+              const xtemp = zx * zx - zy * zy + cx;
+              zy = 2 * zx * zy + cy;
+              zx = xtemp;
+              iterations++;
+            }
+
+            const color = getColor(iterations, maxIter);
+            const idx = (py * width + px) * 4;
+            data[idx] = color[0];
+            data[idx + 1] = color[1];
+            data[idx + 2] = color[2];
+            data[idx + 3] = 255;
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      // Shared state
+      let center = [-0.5, 0.0];
+      let zoom = 3.0;
+      let maxIterations = 100;
+
+      // Stats tracking
+      let webglStats = {
+        frameCount: 0,
+        fpsTime: 0,
+        bestFrame: Infinity,
+        peakFPS: 0,
+      };
+      let canvasStats = {
+        frameCount: 0,
+        fpsTime: 0,
+        bestFrame: Infinity,
+        peakFPS: 0,
+      };
+
+      function render() {
+        // WebGL render
+        const webglStart = performance.now();
+        gl.viewport(0, 0, webglCanvas.width, webglCanvas.height);
+        gl.uniform2f(resolutionLocation, webglCanvas.width, webglCanvas.height);
+        gl.uniform2f(centerLocation, center[0], center[1]);
+        gl.uniform1f(zoomLocation, zoom);
+        gl.uniform1i(maxIterationsLocation, maxIterations);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        const webglTime = performance.now() - webglStart;
+
+        // Canvas 2D render
+        const canvasStart = performance.now();
+        mandelbrot2D(center[0], center[1], zoom, maxIterations);
+        const canvasTime = performance.now() - canvasStart;
+
+        // Update WebGL stats
+        document.getElementById("webgl-frame").textContent =
+          webglTime.toFixed(2);
+        webglStats.frameCount++;
+        webglStats.fpsTime += webglTime;
+        webglStats.bestFrame = Math.min(webglStats.bestFrame, webglTime);
+
+        if (webglStats.frameCount >= 10) {
+          const avgFrameTime = webglStats.fpsTime / webglStats.frameCount;
+          const fps = 1000 / avgFrameTime;
+          document.getElementById("webgl-fps").textContent = fps.toFixed(1);
+          webglStats.peakFPS = Math.max(webglStats.peakFPS, fps);
+          document.getElementById("webgl-peak").textContent =
+            webglStats.peakFPS.toFixed(1);
+          webglStats.frameCount = 0;
+          webglStats.fpsTime = 0;
+        }
+        document.getElementById("webgl-best").textContent =
+          webglStats.bestFrame.toFixed(2);
+
+        // Update Canvas 2D stats
+        document.getElementById("canvas-frame").textContent =
+          canvasTime.toFixed(2);
+        canvasStats.frameCount++;
+        canvasStats.fpsTime += canvasTime;
+        canvasStats.bestFrame = Math.min(canvasStats.bestFrame, canvasTime);
+
+        if (canvasStats.frameCount >= 10) {
+          const avgFrameTime = canvasStats.fpsTime / canvasStats.frameCount;
+          const fps = 1000 / avgFrameTime;
+          document.getElementById("canvas-fps").textContent = fps.toFixed(1);
+          canvasStats.peakFPS = Math.max(canvasStats.peakFPS, fps);
+          document.getElementById("canvas-peak").textContent =
+            canvasStats.peakFPS.toFixed(1);
+          canvasStats.frameCount = 0;
+          canvasStats.fpsTime = 0;
+        }
+        document.getElementById("canvas-best").textContent =
+          canvasStats.bestFrame.toFixed(2);
+
+        // Update shared info
+        document.getElementById("zoom").textContent = (3.0 / zoom).toFixed(2);
+        document.getElementById("iterations").textContent = maxIterations;
+
+        // Animate zoom
+        zoom *= 0.99;
+        maxIterations = Math.min(500, Math.floor(100 + (3.0 / zoom) * 10));
+
+        requestAnimationFrame(render);
+      }
+
+      render();
+    </script>
+  </body>
+</html>
