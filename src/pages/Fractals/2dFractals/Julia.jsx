@@ -1,18 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+/**
+ * Julia Set fractal visualization component
+ * Renders the Julia Set using WebGL with zoom and pan controls
+ */
+
+import { useEffect, useRef } from "react";
 import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
 import JuliaFrag from "../../../utils/shaders/Julia-frag";
-import AllVert from "../../../utils/shaders/vert"; // Using the same vertex shader
+import AllVert from "../../../utils/shaders/vert";
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
+// Constants
+const INITIAL_ZOOM = 2.5;
+const ZOOM_FACTOR = 1.1;
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 400;
+
+/**
+ * Julia component that renders an interactive Julia Set
+ * @returns {JSX.Element} The Julia fractal page
+ */
 export default function Julia() {
+    // Canvas and WebGL references
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
-    const zoomRef = useRef(2.5); // Initial zoom level
+    
+    // View state
+    const zoomRef = useRef(INITIAL_ZOOM);
     const centerRef = useRef({ x: 0.0, y: 0.0 });
+    
+    // Interaction state
     const draggingRef = useRef(false);
     const startPosRef = useRef({ x: 0, y: 0 });
 
@@ -88,9 +108,9 @@ export default function Julia() {
 
         // Zoom functionality
         const handleWheel = (event) => {
-            event.preventDefault(); // Prevent default scrolling behavior
-            const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
-            zoomRef.current *= zoomFactor;
+            event.preventDefault();
+            const zoomMultiplier = event.deltaY > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
+            zoomRef.current *= zoomMultiplier;
             renderFractal();
         };
 
@@ -145,8 +165,8 @@ export default function Julia() {
                 <canvas
                     ref={canvasRef}
                     id="drawing-board"
-                    width={1200}
-                    height={400}
+                    width={CANVAS_WIDTH}
+                    height={CANVAS_HEIGHT}
                     style={{ cursor: "grab" }}
                 ></canvas>
             </div>

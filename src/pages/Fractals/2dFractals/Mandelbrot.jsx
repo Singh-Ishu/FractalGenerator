@@ -1,4 +1,9 @@
-import React, { useEffect, useRef } from "react";
+/**
+ * Mandelbrot Set fractal visualization component
+ * Renders the Mandelbrot Set using WebGL with zoom and pan controls
+ */
+
+import { useEffect, useRef } from "react";
 import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
@@ -7,15 +12,33 @@ import AllVert from "../../../utils/shaders/vert";
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
+// Constants
+const INITIAL_ZOOM = 2.5;
+const ZOOM_FACTOR = 1.1;
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 400;
+
+/**
+ * Mandelbrot component that renders an interactive Mandelbrot Set
+ * @returns {JSX.Element} The Mandelbrot fractal page
+ */
 export default function Mandelbrot() {
+    // Canvas and WebGL references
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
-    const zoomRef = useRef(2.5); // Initial zoom level
+    
+    // View state
+    const zoomRef = useRef(INITIAL_ZOOM);
     const centerRef = useRef({ x: 0.0, y: 0.0 });
+    
+    // Interaction state
     const draggingRef = useRef(false);
     const startPosRef = useRef({ x: 0, y: 0 });
 
+    /**
+     * Renders the Mandelbrot fractal with current parameters
+     */
     function renderFractal() {
         const gl = glRef.current;
         const program = programRef.current;
@@ -25,24 +48,25 @@ export default function Mandelbrot() {
         const params =
             JSON.parse(localStorage.getItem("fractal2dparams")) || {};
 
-        // Set uniforms
-        const resLoc = gl.getUniformLocation(program, "resolution");
-        const centerLoc = gl.getUniformLocation(program, "center");
-        const zoomLoc = gl.getUniformLocation(program, "zoom");
-        const colorLoc = gl.getUniformLocation(program, "colorMultiplier");
-        const insideBWLoc = gl.getUniformLocation(program, "insideBW");
-        const initialZLoc = gl.getUniformLocation(program, "initialZ");
+        // Get uniform locations
+        const resolutionLocation = gl.getUniformLocation(program, "resolution");
+        const centerLocation = gl.getUniformLocation(program, "center");
+        const zoomLocation = gl.getUniformLocation(program, "zoom");
+        const colorLocation = gl.getUniformLocation(program, "colorMultiplier");
+        const insideBWLocation = gl.getUniformLocation(program, "insideBW");
+        const initialZLocation = gl.getUniformLocation(program, "initialZ");
         const canvas = gl.canvas;
 
+        // Set viewport and uniforms
         gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.uniform2f(resLoc, canvas.width, canvas.height);
-        gl.uniform2f(centerLoc, centerRef.current.x, centerRef.current.y);
-        gl.uniform1f(zoomLoc, zoomRef.current);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform2f(centerLocation, centerRef.current.x, centerRef.current.y);
+        gl.uniform1f(zoomLocation, zoomRef.current);
 
-        gl.uniform3f(colorLoc, params.r || 0, params.g || 0, params.b || 0);
-        gl.uniform1i(insideBWLoc, params.insideBW ? 1 : 0);
+        gl.uniform3f(colorLocation, params.r || 0, params.g || 0, params.b || 0);
+        gl.uniform1i(insideBWLocation, params.insideBW ? 1 : 0);
         gl.uniform2f(
-            initialZLoc,
+            initialZLocation,
             parseFloat(params.zr) || 0.0,
             parseFloat(params.zi) || 0.0
         );
@@ -92,9 +116,9 @@ export default function Mandelbrot() {
 
         // Zoom functionality
         const handleWheel = (event) => {
-            event.preventDefault(); // Prevent default scrolling behavior
-            const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
-            zoomRef.current *= zoomFactor;
+            event.preventDefault();
+            const zoomMultiplier = event.deltaY > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
+            zoomRef.current *= zoomMultiplier;
             renderFractal();
         };
 
@@ -149,8 +173,8 @@ export default function Mandelbrot() {
                 <canvas
                     ref={canvasRef}
                     id="drawing-board"
-                    width={1200}
-                    height={400}
+                    width={CANVAS_WIDTH}
+                    height={CANVAS_HEIGHT}
                 ></canvas>
             </div>
             <div className="fractal-info">

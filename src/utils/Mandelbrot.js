@@ -1,14 +1,27 @@
-let insideBWLoc;
-let insideBW = false;
+/**
+ * Mandelbrot fractal renderer using WebGL
+ * @deprecated This file contains legacy code and should be refactored
+ */
 
+// WebGL context and program state
 let gl = null;
 let program = null;
-let resolutionLoc, centerLoc, zoomLoc, colorLoc, z0Loc;
+
+// Uniform locations
+let resolutionLoc, centerLoc, zoomLoc, colorLoc, z0Loc, insideBWLoc;
+
+// View state
 let zoom = 4.0;
-let centerX = 0.0,
-    centerY = 0.0;
+let centerX = 0.0;
+let centerY = 0.0;
+
+// Event listener tracking
 let eventListenersAdded = false;
 
+/**
+ * Renders the Mandelbrot fractal on a canvas element
+ * @deprecated Use the Mandelbrot.jsx component instead
+ */
 export default function renderMandelbrot() {
     const canvas = document.getElementById("drawing-board");
     if (!canvas) {
@@ -16,6 +29,9 @@ export default function renderMandelbrot() {
         return;
     }
 
+    /**
+     * Resizes the canvas to match window dimensions
+     */
     function resizeCanvas() {
         canvas.width = window.innerWidth * devicePixelRatio;
         canvas.height = window.innerHeight * devicePixelRatio;
@@ -41,6 +57,13 @@ export default function renderMandelbrot() {
 
     const fragmentShaderSource = MandelbrotFrag;
 
+    /**
+     * Compiles a WebGL shader
+     * @param {WebGLRenderingContext} gl - WebGL context
+     * @param {string} source - Shader source code
+     * @param {number} type - Shader type (VERTEX_SHADER or FRAGMENT_SHADER)
+     * @returns {WebGLShader} Compiled shader
+     */
     function compileShader(gl, source, type) {
         const shader = gl.createShader(type);
         gl.shaderSource(shader, source);
@@ -95,6 +118,9 @@ export default function renderMandelbrot() {
     gl.uniform2f(z0Loc, 0.0, 0.0);
     gl.uniform1i(insideBWLoc, insideBW);
 
+    /**
+     * Renders the fractal continuously
+     */
     function render() {
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -108,7 +134,8 @@ export default function renderMandelbrot() {
         window.addEventListener("resize", resizeCanvas);
 
         canvas.addEventListener("wheel", (event) => {
-            zoom *= event.deltaY > 0 ? 1.1 : 0.9;
+            const zoomFactor = event.deltaY > 0 ? 1.1 : 0.9;
+            zoom *= zoomFactor;
             gl.uniform1f(zoomLoc, zoom);
             render();
         });
@@ -117,42 +144,43 @@ export default function renderMandelbrot() {
             let startX = event.clientX;
             let startY = event.clientY;
 
-            function onMouseMove(e) {
-                centerX += ((startX - e.clientX) / canvas.width) * zoom;
-                centerY -= ((startY - e.clientY) / canvas.height) * zoom;
+            function handleMouseMove(moveEvent) {
+                const deltaX = (startX - moveEvent.clientX) / canvas.width;
+                const deltaY = (startY - moveEvent.clientY) / canvas.height;
+                
+                centerX += deltaX * zoom;
+                centerY -= deltaY * zoom;
+                
                 gl.uniform2f(centerLoc, centerX, centerY);
                 render();
-                startX = e.clientX;
-                startY = e.clientY;
+                
+                startX = moveEvent.clientX;
+                startY = moveEvent.clientY;
             }
 
-            function onMouseUp() {
-                canvas.removeEventListener("mousemove", onMouseMove);
-                canvas.removeEventListener("mouseup", onMouseUp);
+            function handleMouseUp() {
+                canvas.removeEventListener("mousemove", handleMouseMove);
+                canvas.removeEventListener("mouseup", handleMouseUp);
             }
 
-            canvas.addEventListener("mousemove", onMouseMove);
-            canvas.addEventListener("mouseup", onMouseUp);
+            canvas.addEventListener("mousemove", handleMouseMove);
+            canvas.addEventListener("mouseup", handleMouseUp);
         });
     }
 }
 
+/**
+ * Updates fractal parameters from form inputs
+ * @deprecated This function is no longer used - parameters are handled by components
+ */
 export function updateFractalParams() {
-    console.log("Update Fractal Parameter Called");
-    let zr = parseFloat(document.getElementById("zr").value) || 0.0;
-    let zi = parseFloat(document.getElementById("zi").value) || 0.0;
-    let r = parseFloat(document.getElementById("r").value) || 1.0;
-    let g = parseFloat(document.getElementById("g").value) || 1.0;
-    let b = parseFloat(document.getElementById("b").value) || 1.0;
-    let insideBW = document.getElementById("insideBW").checked ? 1 : 0;
+    const zr = parseFloat(document.getElementById("zr")?.value) || 0.0;
+    const zi = parseFloat(document.getElementById("zi")?.value) || 0.0;
+    const r = parseFloat(document.getElementById("r")?.value) || 1.0;
+    const g = parseFloat(document.getElementById("g")?.value) || 1.0;
+    const b = parseFloat(document.getElementById("b")?.value) || 1.0;
+    const insideBW = document.getElementById("insideBW")?.checked ? 1 : 0;
 
     const fractalSettings = { zr, zi, r, g, b, insideBW };
     localStorage.setItem("fractalSettings", JSON.stringify(fractalSettings));
-
-    // gl.uniform2f(z0Loc, zr, zi);
-    // gl.uniform3f(colorLoc, r, g, b);
-    // gl.uniform1i(insideBWLoc, insideBW);
-
-    // gl.clear(gl.COLOR_BUFFER_BIT);
-    // gl.drawArrays(gl.TRIANGLES, 0, 6);
 }

@@ -1,6 +1,15 @@
+/**
+ * About page component
+ * Displays information about the Fractalite project
+ */
+
 import "../../index.css";
 import "./About.css";
 
+/**
+ * About component that renders the about page
+ * @returns {JSX.Element} The about page with project information
+ */
 export default function About() {
     return (
         <div className="about-container">

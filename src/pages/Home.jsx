@@ -1,8 +1,17 @@
+/**
+ * Home page component
+ * Displays introduction to Fractalite and fractal mathematics
+ */
+
 import "./Home.css";
 import ApollonianGasketWhite from "../assets/ApollonianGasketWhite.png";
 import HomeCollageFractalite from "../assets/Home_Collage_Fractalite.png";
 import HistoryOfFractals from "../assets/HistoryofFractals.png";
 
+/**
+ * Home component that renders the landing page
+ * @returns {JSX.Element} The home page with fractal information
+ */
 export default function Home() {
     return (
         <div className="Home-container-div">
@@ -10,7 +19,11 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src={HomeCollageFractalite} width={"80%"} />
+                <img 
+                    src={HomeCollageFractalite} 
+                    width={"80%"} 
+                    alt="Fractalite collage showcasing various fractal patterns"
+                />
             </div>
             <div className="Home-text-block" id="home-text1">
                 <h2>What's Fractalite?</h2>
@@ -55,13 +68,21 @@ export default function Home() {
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src={ApollonianGasketWhite} width={"80%"} />
+                <img 
+                    src={ApollonianGasketWhite} 
+                    width={"80%"} 
+                    alt="Apollonian Gasket fractal pattern"
+                />
             </div>
             <div
                 className="Home-image-block"
                 id="Home-fractalite-image-collage"
             >
-                <img src={HistoryOfFractals} width={"80%"} />
+                <img 
+                    src={HistoryOfFractals} 
+                    width={"80%"} 
+                    alt="Historical timeline of fractal mathematics"
+                />
             </div>
             <div className="Home-text-block" id="home-text3">
                 <h2>The History of Fractals</h2>

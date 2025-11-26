@@ -1,8 +1,21 @@
-import "./Sidebar.css";
-import { useEffect } from "react";
+/**
+ * Sidebar component for fractal parameter controls
+ * Allows users to adjust fractal generation parameters
+ */
 
+import "./Sidebar.css";
+
+/**
+ * Sidebar component that provides controls for fractal parameters
+ * @param {Object} props - Component props
+ * @param {Function} [props.onGenerate] - Optional callback when parameters are updated
+ * @returns {JSX.Element} The sidebar component with parameter controls
+ */
 export default function Sidebar({ onGenerate }) {
-    function saveFractalParamsToLocalStorage() {
+    /**
+     * Saves fractal parameters to localStorage and triggers update event
+     */
+    function handleGenerateFractal() {
         const params = {
             zr: parseFloat(document.getElementById("zr").value) || 0,
             zi: parseFloat(document.getElementById("zi").value) || 0,
@@ -17,7 +30,6 @@ export default function Sidebar({ onGenerate }) {
         localStorage.setItem("fractal2dparams", JSON.stringify(params));
         window.dispatchEvent(new Event("fractal2dparams-update"));
 
-        // Optional: call a callback if needed (like re-rendering)
         if (onGenerate) {
             onGenerate(params);
         }
@@ -158,7 +170,7 @@ export default function Sidebar({ onGenerate }) {
                 </table>
             </div>
             <button
-                onClick={saveFractalParamsToLocalStorage}
+                onClick={handleGenerateFractal}
                 id="sidebar-button"
             >
                 Generate

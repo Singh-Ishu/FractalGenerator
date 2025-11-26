@@ -1,4 +1,9 @@
-import React, { useEffect, useRef } from "react";
+/**
+ * Mandelbulb 3D fractal visualization component
+ * Renders the Mandelbulb using WebGL with rotation and zoom controls
+ */
+
+import { useEffect, useRef } from "react";
 import Sidebar from "../../../components/Sidebar";
 import "../../fractal.css";
 
@@ -7,13 +12,31 @@ import AllVert from "../../../utils/shaders/vert";
 
 import { compileShader, createProgram } from "../../../utils/Helpers";
 
+// Constants
+const INITIAL_ZOOM_3D = 1.0;
+const ZOOM_FACTOR = 1.1;
+const ROTATION_SENSITIVITY = 0.5;
+const MIN_PITCH = -90.0;
+const MAX_PITCH = 90.0;
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 400;
+
+/**
+ * Mandelbulb component that renders an interactive 3D Mandelbulb fractal
+ * @returns {JSX.Element} The Mandelbulb fractal page
+ */
 export default function Mandelbulb() {
+    // Canvas and WebGL references
     const canvasRef = useRef(null);
     const glRef = useRef(null);
     const programRef = useRef(null);
-    const zoomRef = useRef(1.0); // Normal zoom: higher = closer
-    const centerRef = useRef({ x: 0.0, y: 0.0, z: 0.0 }); // Mandelbulb center
-    const anglesRef = useRef({ yaw: 0.0, pitch: 0.0 }); // Camera angles (degrees)
+    
+    // View state
+    const zoomRef = useRef(INITIAL_ZOOM_3D);
+    const centerRef = useRef({ x: 0.0, y: 0.0, z: 0.0 });
+    const anglesRef = useRef({ yaw: 0.0, pitch: 0.0 });
+    
+    // Interaction state
     const draggingRef = useRef(false);
     const startPosRef = useRef({ x: 0, y: 0 });
 
@@ -98,11 +121,11 @@ export default function Mandelbulb() {
         // Listen for updates
         window.addEventListener("fractal2dparams-update", renderFractal);
 
-        // Zoom functionality (normal: scroll up to zoom in)
+        // Zoom functionality
         const handleWheel = (event) => {
             event.preventDefault();
-            const zoomFactor = event.deltaY < 0 ? 1.1 : 0.9; // Scroll up: increase zoom
-            zoomRef.current *= zoomFactor;
+            const zoomMultiplier = event.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
+            zoomRef.current *= zoomMultiplier;
             renderFractal();
         };
 
@@ -123,17 +146,16 @@ export default function Mandelbulb() {
 
             if (event.shiftKey) {
                 // Translate in z-axis
-                const scale = zoomRef.current / 1.0;
-                centerRef.current.z += (deltaY / canvas.height) * scale;
+                centerRef.current.z += (deltaY / canvas.height) * zoomRef.current;
             } else {
                 // Rotate (yaw and pitch)
-                const sensitivity = 0.5; // Degrees per pixel
-                anglesRef.current.yaw -= deltaX * sensitivity;
-                anglesRef.current.pitch -= deltaY * sensitivity;
+                anglesRef.current.yaw -= deltaX * ROTATION_SENSITIVITY;
+                anglesRef.current.pitch -= deltaY * ROTATION_SENSITIVITY;
+                
                 // Clamp pitch to avoid flipping
                 anglesRef.current.pitch = Math.max(
-                    -90.0,
-                    Math.min(90.0, anglesRef.current.pitch)
+                    MIN_PITCH,
+                    Math.min(MAX_PITCH, anglesRef.current.pitch)
                 );
             }
 
@@ -169,8 +191,8 @@ export default function Mandelbulb() {
                 <canvas
                     ref={canvasRef}
                     id="drawing-board"
-                    width={1200}
-                    height={400}
+                    width={CANVAS_WIDTH}
+                    height={CANVAS_HEIGHT}
                 ></canvas>
             </div>
             <div className="fractal-info">
