@@ -19,7 +19,13 @@ const AVAILABLE_PAGES = [
     { name: "Mandelbrot", path: "/2d/mandelbrot" },
     { name: "Julia", path: "/2d/julia" },
     { name: "Burning Ship", path: "/2d/burning-ship" },
+    { name: "Sierpinski Triangle", path: "/2d/sierpinski" },
+    { name: "Koch Snowflake", path: "/2d/koch-snowflake" },
+    { name: "Barnsley Fern", path: "/2d/barnsley-fern" },
     { name: "Mandelbulb", path: "/3d/mandelbulb" },
+    { name: "Menger Sponge", path: "/3d/menger-sponge" },
+    { name: "Quaternion Julia", path: "/3d/quaternion-julia" },
+    { name: "Kleinian Groups", path: "/3d/kleinian" },
 ];
 
 /**
