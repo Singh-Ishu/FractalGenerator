@@ -21,19 +21,22 @@ const FRACTALS_3D = [
         path: "/3d/mandelbulb",
     },
     {
-        name: "Menger Sponge (W.I.P)",
+        name: "Menger Sponge",
         equation: "3D generalization of the Sierpinski carpet",
-        imageUrl: "src/assets/menger.png",
+        imageUrl: PlainMandelbulb,
+        path: "/3d/menger-sponge",
     },
     {
-        name: "Quaternion Julia (W.I.P)",
+        name: "Quaternion Julia",
         equation: "z_n+1 = z_n^2 + c, where z,c ∈ ℍ",
-        imageUrl: "src/assets/quaternion.png",
+        imageUrl: PlainMandelbulb,
+        path: "/3d/quaternion-julia",
     },
     {
-        name: "Kleinian Groups (W.I.P)",
+        name: "Kleinian Groups",
         equation: "Generated through Möbius transformations",
-        imageUrl: "src/assets/kleinian.png",
+        imageUrl: PlainMandelbulb,
+        path: "/3d/kleinian",
     },
 ];
 

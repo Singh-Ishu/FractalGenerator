@@ -35,19 +35,22 @@ const FRACTALS_2D = [
         path: "/2d/burning-ship",
     },
     {
-        name: "Sierpinski Triangle (W.I.P)",
+        name: "Sierpinski Triangle",
         equation: "Fractal generated through recursive subdivision",
-        imageUrl: "src/assets/sierpinski.png",
+        imageUrl: PlainMandelbrot,
+        path: "/2d/sierpinski",
     },
     {
-        name: "Koch Snowflake (W.I.P)",
+        name: "Koch Snowflake",
         equation: "Fractal generated through recursive edge replacement",
-        imageUrl: "src/assets/koch.png",
+        imageUrl: PlainJulia,
+        path: "/2d/koch-snowflake",
     },
     {
-        name: "Barnsley Fern (W.I.P)",
+        name: "Barnsley Fern",
         equation: "Generated using iterated function system (IFS)",
-        imageUrl: "src/assets/fern.png",
+        imageUrl: PlainBurningShip,
+        path: "/2d/barnsley-fern",
     },
 ];
 
