@@ -1,4 +1,6 @@
+import React from 'react';
 import styles from "./fractalDimTemplate.module.css";
+import Card from "../components/Card";
 import ImageCarousel from "../components/ImageCarousel";
 
 // Placeholder data for the carousel
@@ -10,41 +12,78 @@ const carouselItems = [
     { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sierpinski_triangle.svg/1200px-Sierpinski_triangle.svg.png", link: "/2d/sierpinski", title: "Sierpinski Triangle" }
 ];
 
-function fractalDimTemplate() {
+function FractalDimTemplate({
+    title,
+    description,
+    carouselItems,
+    sampleImages, // For now assuming this might be an array or just children
+    subHeading,
+    cards, // Kept cards prop
+}) {
+    const [isCompact, setIsCompact] = React.useState(false);
+
+    const handleScroll = (e) => {
+        const scrollTop = e.target.scrollTop;
+        // Threshold to trigger shrink. Small amount (e.g. 50px) gives a responsive feel.
+        if (scrollTop > 50 && !isCompact) {
+            setIsCompact(true);
+        } else if (scrollTop < 20 && isCompact) {
+            setIsCompact(false);
+        }
+    };
+
     return (
-        <div className={styles.fractalTemplateContainer}>
-            {/* Image Carousel Section */}
-            <div className={styles.carouselSection}>
+        <div className={styles.fractalTemplateContainer} onScroll={handleScroll}>
+            {/* Image Carousel Section - Dynamic Height */}
+            <div
+                className={styles.carouselSection}
+                style={{ height: isCompact ? '40%' : '60%' }}
+            >
                 <ImageCarousel items={carouselItems} />
             </div>
 
-            {/* Content Container */}
-            <div className={styles.contentContainer}>
+            {/* Content Container - Scrollable */}
+            <div
+                className={styles.contentContainer}
+                onScroll={handleScroll}
+            >
 
                 {/* 7:3 Split Section */}
                 <div className={styles.splitSection}>
                     <div className={styles.infoBox}>
-                        <h3>What is a fractal</h3>
-                        <p>A fractal is a complex geometric shape that exhibits self-similarity at different scales.</p>
+                        <h3>{title}</h3>
+                        <div className={styles.descriptionText}>
+                            {/* Allow simple text or Rich text/children */}
+                            {typeof description === 'string' ? <p>{description}</p> : description}
+                        </div>
                     </div>
                     <div className={styles.sampleImagesBox}>
                         <h3>Sample Images</h3>
+                        {/* Placeholder or dynamic images */}
                         <div className={styles.placeholderImage}>Image 1</div>
                         <div className={styles.placeholderImage}>Image 2</div>
                     </div>
                 </div>
 
                 {/* Sub Heading */}
-                <div className={styles.subHeading}>
-                    <h3>Sub heading 1</h3>
-                </div>
+                {subHeading && (
+                    <div className={styles.subHeading}>
+                        {typeof subHeading === 'string' ? <h3>{subHeading}</h3> : subHeading}
+                    </div>
+                )}
 
                 {/* Cards Section */}
                 <div className={styles.cardsSection}>
-                    <h3>Cards section</h3>
-                    <div className={styles.cardPlaceholder}>Card 1</div>
-                    <div className={styles.cardPlaceholder}>Card 2</div>
-                    <div className={styles.cardPlaceholder}>Card 3</div>
+
+                    {cards.map((card, index) => (
+                        <Card
+                            key={`${card.name}-${index}`}
+                            name={card.name}
+                            equation={card.equation}
+                            imageUrl={card.imageUrl}
+                            path={card.path}
+                        />
+                    ))}
                 </div>
 
             </div>
@@ -52,4 +91,4 @@ function fractalDimTemplate() {
     );
 }
 
-export default fractalDimTemplate;
+export default FractalDimTemplate;
