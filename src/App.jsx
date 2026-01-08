@@ -29,8 +29,7 @@ import Kleinian from "./pages/Fractals/3dFractals/Kleinian";
 // Layout Components
 import Header from "./components/Header";
 
-//TestingComponents
-import FractalDimensions from "./pages/fractalDimTemplate";
+
 
 /**
  * App component that defines the main application structure and routing.
@@ -44,7 +43,7 @@ function App() {
                 {/* Main Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/fractal-dimensions" element={<FractalDimensions />} />
+
 
                 {/* 2D Fractal Routes */}
                 <Route path="/2d" element={<Fractals2d />} />
