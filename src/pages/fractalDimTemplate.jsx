@@ -21,6 +21,7 @@ function FractalDimTemplate({
     cards, // Kept cards prop
 }) {
     const [isCompact, setIsCompact] = React.useState(false);
+    const contentRef = React.useRef(null);
 
     const handleScroll = (e) => {
         const scrollTop = e.target.scrollTop;
@@ -32,12 +33,20 @@ function FractalDimTemplate({
         }
     };
 
+    // Bridge wheel events from carousel to content
+    const handleCarouselWheel = (e) => {
+        if (contentRef.current) {
+            contentRef.current.scrollTop += e.deltaY;
+        }
+    };
+
     return (
-        <div className={styles.fractalTemplateContainer} onScroll={handleScroll}>
+        <div className={styles.fractalTemplateContainer}>
             {/* Image Carousel Section - Dynamic Height */}
             <div
                 className={styles.carouselSection}
-                style={{ height: isCompact ? '40%' : '60%' }}
+                style={{ height: isCompact ? '40%' : '70%' }}
+                onWheel={handleCarouselWheel} // Capture scroll over carousel
             >
                 <ImageCarousel items={carouselItems} />
             </div>
@@ -46,6 +55,7 @@ function FractalDimTemplate({
             <div
                 className={styles.contentContainer}
                 onScroll={handleScroll}
+                ref={contentRef}
             >
 
                 {/* 7:3 Split Section */}
