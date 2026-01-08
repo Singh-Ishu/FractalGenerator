@@ -29,6 +29,9 @@ import Kleinian from "./pages/Fractals/3dFractals/Kleinian";
 // Layout Components
 import Header from "./components/Header";
 
+//TestingComponents
+import FractalDimensions from "./pages/fractalDimTemplate";
+
 /**
  * App component that defines the main application structure and routing.
  * @returns {JSX.Element} The rendered application
@@ -41,7 +44,8 @@ function App() {
                 {/* Main Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                
+                <Route path="/fractal-dimensions" element={<FractalDimensions />} />
+
                 {/* 2D Fractal Routes */}
                 <Route path="/2d" element={<Fractals2d />} />
                 <Route path="/2d/mandelbrot" element={<Mandelbrot />} />
@@ -50,7 +54,7 @@ function App() {
                 <Route path="/2d/sierpinski" element={<Sierpinski />} />
                 <Route path="/2d/koch-snowflake" element={<KochSnowflake />} />
                 <Route path="/2d/barnsley-fern" element={<BarnsleyFern />} />
-                
+
                 {/* 3D Fractal Routes */}
                 <Route path="/3d" element={<Fractals3d />} />
                 <Route path="/3d/mandelbulb" element={<Mandelbulb />} />
