@@ -4,7 +4,7 @@
  */
 
 import { useNavigate } from "react-router-dom";
-import "./Card.css";
+import styles from "./Card.module.css";
 
 /**
  * Formats an equation string to handle superscripts and subscripts
@@ -26,10 +26,10 @@ const formatEquation = (equation) => {
  * @param {string} [props.path] - Optional path for navigation
  * @returns {JSX.Element} The card component
  */
-export default function Card({ name, equation, imageUrl, path }) {
+export default function Card({ name, equation, imageUrl, path, layout = "horizontal" }) {
     const navigate = useNavigate();
     const isWIP = name.includes("(W.I.P)");
-    
+
     const handleClick = () => {
         if (path && !isWIP) {
             navigate(path);
@@ -37,15 +37,15 @@ export default function Card({ name, equation, imageUrl, path }) {
     };
 
     return (
-        <div 
-            className={`card ${isWIP ? 'card--wip' : 'card--clickable'}`}
+        <div
+            className={`${styles.card} ${isWIP ? styles.cardWip : styles.cardClickable} ${layout === 'horizontal' ? styles.cardHorizontal : ''}`}
             onClick={handleClick}
         >
-            <img src={imageUrl} alt={name} className="card__image" />
-            <div className="card__content">
-                <h2 className="card__title">{name}</h2>
-                <div 
-                    className="card__equation"
+            <img src={imageUrl} alt={name} className={styles.cardImage} />
+            <div className={styles.cardContent}>
+                <h2 className={styles.cardTitle}>{name}</h2>
+                <div
+                    className={styles.cardEquation}
                     dangerouslySetInnerHTML={{ __html: formatEquation(equation) }}
                 />
             </div>
