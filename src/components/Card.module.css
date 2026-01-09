@@ -86,14 +86,15 @@
 }
 
 .cardEquation {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    color: var(--color-text-main);
     /* Slate 600 */
-    font-weight: 500;
-    font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
-    background-color: rgba(var(--rgb-black), 0.03);
+    font-weight: 400;
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+    background-color: transparent;
     /* Slate 100 */
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--border-light);
+    padding: 0;
+    /* border-radius: 6px; */
+    border: none;
 }

@@ -9,19 +9,19 @@ import PlainBurningShip from "../assets/PlainBurningShip.png";
 const FRACTALS_2D = [
     {
         name: "Mandelbrot",
-        equation: "z_n+1 = z_n^2 + c",
+        equation: "z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c",
         imageUrl: PlainMandelbrot,
         path: "/2d/mandelbrot",
     },
     {
         name: "Julia",
-        equation: "z_n+1 = z_n^2 + c",
+        equation: "z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c",
         imageUrl: PlainJulia,
         path: "/2d/julia",
     },
     {
         name: "Burning Ship",
-        equation: "z_n+1 = (|Re(z_n)| + i|Im(z_n)|)^2 + c",
+        equation: "z<sub>n+1</sub> = (|Re(z<sub>n</sub>)| + i|Im(z<sub>n</sub>)|)<sup>2</sup> + c",
         imageUrl: PlainBurningShip,
         path: "/2d/burning-ship",
     },

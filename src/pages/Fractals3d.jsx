@@ -7,7 +7,7 @@ import PlainMandelbulb from "../assets/PlainMandelbulb.png";
 const FRACTALS_3D = [
     {
         name: "Mandelbulb",
-        equation: "z_n+1 = z_n^8 + c",
+        equation: "z<sub>n+1</sub> = z<sub>n</sub><sup>8</sup> + c",
         imageUrl: PlainMandelbulb,
         path: "/3d/mandelbulb",
     },
@@ -19,7 +19,7 @@ const FRACTALS_3D = [
     },
     {
         name: "Quaternion Julia",
-        equation: "z_n+1 = z_n^2 + c, where z,c ∈ ℍ",
+        equation: "z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c, where z,c ∈ ℍ",
         imageUrl: PlainMandelbulb,
         path: "/3d/quaternion-julia",
     },

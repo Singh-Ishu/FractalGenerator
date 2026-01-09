@@ -6,16 +6,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.css";
 
-/**
- * Formats an equation string to handle superscripts and subscripts
- * @param {string} equation - The equation string to format
- * @returns {string} Formatted equation with HTML tags
- */
-const formatEquation = (equation) => {
-    return equation
-        .replace(/\^(\d+)/g, '<sup>$1</sup>')  // Handle superscripts
-        .replace(/_(\d+)/g, '<sub>$1</sub>');  // Handle subscripts
-};
+
 
 /**
  * Card component for displaying fractal information
@@ -46,7 +37,7 @@ export default function Card({ name, equation, imageUrl, path, layout = "horizon
                 <h2 className={styles.cardTitle}>{name}</h2>
                 <div
                     className={styles.cardEquation}
-                    dangerouslySetInnerHTML={{ __html: formatEquation(equation) }}
+                    dangerouslySetInnerHTML={{ __html: equation }}
                 />
             </div>
         </div>
