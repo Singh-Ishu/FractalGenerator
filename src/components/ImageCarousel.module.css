@@ -29,10 +29,10 @@
     height: 80%;
     transition: transform 0.5s ease, opacity 0.5s ease, z-index 0s;
     cursor: pointer;
-    box-shadow: 0 10px 20px var(--shadow-carousel);
+    box-shadow: 0 10px 20px var(--shadow-lg);
     border-radius: 10px;
     overflow: hidden;
-    background: var(--color-white);
+    background: var(--bg-white);
     display: flex;
     flex-direction: column;
 }
@@ -50,7 +50,7 @@
     justify-content: center;
     font-weight: bold;
     background-color: var(--bg-overlay);
-    color: var(--color-gray-800);
+    color: var(--color-text-main);
 }
 
 /* States */
@@ -86,7 +86,7 @@
     top: 50%;
     transform: translateY(-50%);
     background-color: var(--bg-dark-button);
-    color: var(--color-white);
+    color: var(--color-text-inverted);
     border: none;
     padding: 15px;
     cursor: pointer;

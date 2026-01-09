@@ -19,11 +19,11 @@
     border-radius: 4px;
     border: none;
     background: var(--bg-dark-search);
-    color: var(--color-white);
+    color: var(--color-text-inverted);
 }
 
 .searchbar__input::placeholder {
-    color: var(--color-slate-300);
+    color: rgba(var(--rgb-white), 0.8);
 }
 
 .searchbar__suggestions {
@@ -32,7 +32,7 @@
     left: 10px;
     right: 10px;
     background: var(--bg-dark-overlay);
-    border: 1px solid var(--border-transparent-white);
+    border: 1px solid var(--border-glass);
     border-radius: 4px;
     list-style: none;
     padding: 0;
@@ -45,13 +45,13 @@
 .searchbar__suggestion-item {
     padding: 10px;
     cursor: pointer;
-    color: var(--color-white);
-    border-bottom: 1px solid var(--border-transparent-white);
+    color: var(--color-text-inverted);
+    border-bottom: 1px solid var(--border-glass);
 }
 
 .searchbar__suggestion-item:hover {
     background: var(--bg-glass);
-    color: var(--color-goldenrod);
+    color: rgb(var(--rgb-gold));
 }
 
 /* Responsive styles */

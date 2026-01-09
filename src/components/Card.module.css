@@ -1,8 +1,8 @@
 /* Flex logic if not using grid, but we updated parent to grid. */
 /* Just ensure card takes available space */
 .card {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-slate-200);
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     padding: 24px;
     display: flex;
@@ -10,7 +10,7 @@
     justify-content: space-between;
     width: 100%;
     /* Fill Grid Cell */
-    box-shadow: 0 4px 6px var(--shadow-card);
+    box-shadow: 0 4px 6px var(--shadow-sm);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -26,15 +26,15 @@
 
 .cardClickable:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px var(--shadow-card-hover);
-    border-color: var(--color-slate-300);
+    box-shadow: 0 12px 24px var(--shadow-lg);
+    border-color: rgba(var(--rgb-black), 0.3);
 }
 
 /* WIP State */
 .cardWip {
     opacity: 0.7;
     cursor: not-allowed;
-    background-color: var(--color-slate-50);
+    background-color: rgba(var(--rgb-black), 0.02);
     border-style: dashed;
 }
 
@@ -51,8 +51,8 @@
     height: 140px;
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid var(--color-slate-100);
-    box-shadow: 0 2px 4px var(--shadow-card);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px var(--shadow-sm);
     display: block;
     flex-shrink: 0;
     /* Prevent image shrinking */
@@ -79,7 +79,7 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-slate-900);
+    color: var(--color-text-main);
     /* Slate 900 */
     letter-spacing: -0.025em;
     line-height: 1.2;
@@ -87,13 +87,13 @@
 
 .cardEquation {
     font-size: 1.1rem;
-    color: var(--color-slate-600);
+    color: var(--color-text-muted);
     /* Slate 600 */
     font-weight: 500;
     font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
-    background-color: var(--color-slate-100);
+    background-color: rgba(var(--rgb-black), 0.03);
     /* Slate 100 */
     padding: 6px 12px;
     border-radius: 6px;
-    border: 1px solid var(--color-slate-200);
+    border: 1px solid var(--border-light);
 }

@@ -50,7 +50,7 @@
 }
 
 .fractal-info-text p:hover {
-    color: var(--color-goldenrod);
+    color: rgb(var(--rgb-gold));
     background-color: var(--bg-glass-hover);
     transform: scale(1.05);
 }

@@ -10,7 +10,7 @@
     background-color: var(--bg-glass);
     backdrop-filter: blur(15px);
     /* border: 1px gold solid; */
-    box-shadow: 0 0 10px var(--shadow-gold);
+    box-shadow: 0 0 10px var(--shadow-glow);
 
     padding: 10px 25px;
     margin: 25px 25px 10px 10px;
@@ -23,7 +23,7 @@
 
 .Home-text-block:hover {
     animation: goldenBorderAnimation 3s infinite;
-    color: var(--color-wheat);
+    color: rgb(var(--rgb-gold));
 }
 
 .home-ul {
@@ -33,7 +33,7 @@
 }
 
 .home-ul li:hover {
-    color: var(--color-goldenrod);
+    color: rgb(var(--rgb-gold));
 }
 
 .Home-image-block {
@@ -63,16 +63,16 @@ h2 {
 @keyframes goldenBorderAnimation {
     0% {
         border-color: transparent;
-        box-shadow: 0 0 10px var(--shadow-gold);
+        box-shadow: 0 0 10px var(--shadow-glow);
     }
 
     50% {
-        border-color: var(--color-gold);
-        box-shadow: 0 0 15px var(--shadow-gold-strong);
+        border-color: rgb(var(--rgb-gold));
+        box-shadow: 0 0 15px var(--shadow-glow);
     }
 
     100% {
         border-color: transparent;
-        box-shadow: 0 0 10px var(--shadow-gold);
+        box-shadow: 0 0 10px var(--shadow-glow);
     }
 }

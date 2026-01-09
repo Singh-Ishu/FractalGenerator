@@ -23,13 +23,13 @@
     margin: 0;
     font-family: 'Great Vibes', cursive;
     font-size: 3.5rem;
-    color: var(--color-white);
+    color: var(--color-text-inverted);
     text-decoration: none;
 }
 
 .header__title a {
     text-decoration: none;
-    color: var(--color-white);
+    color: var(--color-text-inverted);
 }
 
 .header__nav {
@@ -47,14 +47,14 @@
 
 .header__nav-item a {
     text-decoration: none;
-    color: var(--color-white);
+    color: var(--color-text-inverted);
     font-size: 1.1rem;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .header__nav-item a:hover {
-    color: var(--color-goldenrod);
+    color: rgb(var(--rgb-gold));
 }
 
 /* Responsive styles */
