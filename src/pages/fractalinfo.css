@@ -4,7 +4,8 @@
 
 .fractal-info-page-container {
     padding: 2rem;
-    margin-top: 8rem; /* Space for fixed header */
+    margin-top: 8rem;
+    /* Space for fixed header */
     min-height: calc(100vh - 4rem);
     overflow: hidden;
 }
@@ -40,16 +41,17 @@
 }
 
 .fractal-info-text p {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-glass);
     backdrop-filter: blur(5px);
     padding: 1em;
     border-radius: 5px;
     margin: 1em;
     transition: color 0.1s ease, background-color 0.1s ease, transform 1s ease;
 }
+
 .fractal-info-text p:hover {
-    color: goldenrod;
-    background-color: rgba(255, 255, 255, 0.3);
+    color: var(--color-goldenrod);
+    background-color: var(--bg-glass-hover);
     transform: scale(1.05);
 }
 
@@ -57,10 +59,10 @@
     0% {
         transform: translateX(0);
     }
+
     100% {
-        transform: translateX(
-            calc(-300px * 3 - 2rem * 3)
-        ); /* Move by 3 cards + gaps */
+        transform: translateX(calc(-300px * 3 - 2rem * 3));
+        /* Move by 3 cards + gaps */
     }
 }
 
@@ -82,6 +84,7 @@
         0% {
             transform: translateX(0);
         }
+
         100% {
             transform: translateX(calc(-250px * 3 - 1rem * 3));
         }

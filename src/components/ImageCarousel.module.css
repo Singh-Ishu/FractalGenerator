@@ -29,10 +29,10 @@
     height: 80%;
     transition: transform 0.5s ease, opacity 0.5s ease, z-index 0s;
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px var(--shadow-carousel);
     border-radius: 10px;
     overflow: hidden;
-    background: white;
+    background: var(--color-white);
     display: flex;
     flex-direction: column;
 }
@@ -49,8 +49,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
+    background-color: var(--bg-overlay);
+    color: var(--color-gray-800);
 }
 
 /* States */
@@ -85,8 +85,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    background-color: var(--bg-dark-button);
+    color: var(--color-white);
     border: none;
     padding: 15px;
     cursor: pointer;
@@ -97,5 +97,5 @@
 }
 
 .navButton:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--bg-dark-hover);
 }

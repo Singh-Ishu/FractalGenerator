@@ -7,10 +7,10 @@
 
 .Home-text-block {
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-glass);
     backdrop-filter: blur(15px);
     /* border: 1px gold solid; */
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 10px var(--shadow-gold);
 
     padding: 10px 25px;
     margin: 25px 25px 10px 10px;
@@ -23,7 +23,7 @@
 
 .Home-text-block:hover {
     animation: goldenBorderAnimation 3s infinite;
-    color: wheat;
+    color: var(--color-wheat);
 }
 
 .home-ul {
@@ -31,8 +31,9 @@
     margin: 5px 0px 5px 0px;
     list-style: circle;
 }
+
 .home-ul li:hover {
-    color: goldenrod;
+    color: var(--color-goldenrod);
 }
 
 .Home-image-block {
@@ -49,6 +50,7 @@ h2 {
 #home-text3 {
     justify-self: end;
 }
+
 #home-text2 {
     justify-self: left;
 }
@@ -61,14 +63,16 @@ h2 {
 @keyframes goldenBorderAnimation {
     0% {
         border-color: transparent;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        box-shadow: 0 0 10px var(--shadow-gold);
     }
+
     50% {
-        border-color: gold;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 1);
+        border-color: var(--color-gold);
+        box-shadow: 0 0 15px var(--shadow-gold-strong);
     }
+
     100% {
         border-color: transparent;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        box-shadow: 0 0 10px var(--shadow-gold);
     }
 }

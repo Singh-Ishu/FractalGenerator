@@ -12,7 +12,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: var(--bg-dark-overlay);
 }
 
 .header__title {
@@ -23,13 +23,13 @@
     margin: 0;
     font-family: 'Great Vibes', cursive;
     font-size: 3.5rem;
-    color: white;
+    color: var(--color-white);
     text-decoration: none;
 }
 
 .header__title a {
     text-decoration: none;
-    color: white;
+    color: var(--color-white);
 }
 
 .header__nav {
@@ -47,14 +47,14 @@
 
 .header__nav-item a {
     text-decoration: none;
-    color: white;
+    color: var(--color-white);
     font-size: 1.1rem;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .header__nav-item a:hover {
-    color: goldenrod;
+    color: var(--color-goldenrod);
 }
 
 /* Responsive styles */

@@ -38,14 +38,14 @@
     /* Internal scroll */
     scroll-behavior: smooth;
 
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 40px 40px 0 0;
     margin-top: -40px;
     /* Overlap effect */
     position: relative;
     z-index: 20;
 
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -10px 30px var(--shadow-card);
     padding: 60px 40px;
     box-sizing: border-box;
     /* min-height: 100vh; Removed */
@@ -90,7 +90,7 @@
 .descriptionText {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #4a5568;
+    color: var(--color-slate-600);
     text-align: justify;
 }
 
@@ -110,7 +110,7 @@
 
 .subHeading h3 {
     font-size: 2rem;
-    color: #2d3748;
+    color: var(--color-slate-800);
 }
 
 .cardsSection {
@@ -131,17 +131,17 @@
 .cardsSection h3 {
     font-size: 2rem;
     margin-bottom: 2rem;
-    color: #2d3748;
+    color: var(--color-slate-800);
 }
 
 .placeholderImage {
-    background-color: #f7fafc;
+    background-color: var(--color-slate-50);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 10px;
     width: 100%;
     text-align: center;
-    color: #a0aec0;
+    color: var(--color-slate-400);
 }
 
 /* Responsive Design */
