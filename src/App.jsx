@@ -57,7 +57,7 @@ function App() {
                 {/* 3D Fractal Routes */}
                 <Route path="/3d" element={<Fractals3d />} />
                 <Route path="/3d/mandelbulb" element={<Mandelbulb />} />
-                <Route path="/3d/menger-sponge" element={<MengerSponge />} />
+                {/*<Route path="/3d/menger-sponge" element={<MengerSponge />} />*/}
                 <Route path="/3d/quaternion-julia" element={<QuaternionJulia />} />
                 <Route path="/3d/kleinian" element={<Kleinian />} />
             </Routes>
