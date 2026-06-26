@@ -32,8 +32,7 @@ const FRACTALS_3D = [
 ];
 
 const CAROUSEL_ITEMS = [
-    { url: "https://upload.wikimedia.org/wikipedia/commons/2/21/Mandel_zoom_00_mandelbrot_set.jpg", link: "/3d/mandelbulb", title: "Mandelbulb" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Menger_sponge_%28Level_4%29.jpg", link: "/3d/menger-sponge", title: "Menger Sponge" }
+    { url: PlainMandelbulb, link: "/3d/mandelbulb", title: "Mandelbulb" }
 ];
 
 export default function Fractals3d() {

@@ -5,6 +5,8 @@ import FractalDimTemplate from "./fractalDimTemplate";
 import PlainMandelbrot from "../assets/PlainMandelbrot.png";
 import PlainJulia from "../assets/PlainJulia.png";
 import PlainBurningShip from "../assets/PlainBurningShip.png";
+import SierpinskiTriangle from "../assets/SierpinskiTriangle.png";
+import ApollonianGasket from "../assets/ApollonianGasket.png";
 
 const FRACTALS_2D = [
     {
@@ -28,7 +30,7 @@ const FRACTALS_2D = [
     {
         name: "Sierpinski Triangle",
         equation: "Fractal generated through recursive subdivision",
-        imageUrl: PlainMandelbrot,
+        imageUrl: SierpinskiTriangle,
         path: "/2d/sierpinski",
     },
     {
@@ -46,10 +48,11 @@ const FRACTALS_2D = [
 ];
 
 const CAROUSEL_ITEMS = [
-    { url: "https://upload.wikimedia.org/wikipedia/commons/2/21/Mandel_zoom_00_mandelbrot_set.jpg", link: "/2d/mandelbrot", title: "Mandelbrot Set" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Julia_set_%28C_%3D_0.285_%2B_0.01i%29.jpg/1200px-Julia_set_%28C_%3D_0.285_%2B_0.01i%29.jpg", link: "/2d/julia", title: "Julia Set" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Von_Koch_curve.gif", link: "/2d/koch-snowflake", title: "Koch Snowflake" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sierpinski_triangle.svg/1200px-Sierpinski_triangle.svg.png", link: "/2d/sierpinski", title: "Sierpinski Triangle" }
+    { url: PlainMandelbrot, link: "/2d/mandelbrot", title: "Mandelbrot Set" },
+    { url: PlainJulia, link: "/2d/julia", title: "Julia Set" },
+    { url: PlainBurningShip, link: "/2d/burning-ship", title: "Burning Ship" },
+    { url: SierpinskiTriangle, link: "/2d/sierpinski", title: "Sierpinski Triangle" },
+    { url: ApollonianGasket, link: "/", title: "Apollonian Gasket" }
 ];
 
 export default function Fractals2d() {

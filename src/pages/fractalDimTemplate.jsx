@@ -3,19 +3,27 @@ import styles from "./fractalDimTemplate.module.css";
 import Card from "../components/Card";
 import ImageCarousel from "../components/ImageCarousel";
 
+import PlainMandelbrot from "../assets/PlainMandelbrot.png";
+import PlainJulia from "../assets/PlainJulia.png";
+import PlainBurningShip from "../assets/PlainBurningShip.png";
+import SierpinskiTriangle from "../assets/SierpinskiTriangle.png";
+import PlainMandelbulb from "../assets/PlainMandelbulb.png";
+import ApollonianGasket from "../assets/ApollonianGasket.png";
+
 // Placeholder data for the carousel
-const carouselItems = [
-    { url: "https://upload.wikimedia.org/wikipedia/commons/2/21/Mandel_zoom_00_mandelbrot_set.jpg", link: "/2d/mandelbrot", title: "Mandelbrot Set" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Julia_set_%28C_%3D_0.285_%2B_0.01i%29.jpg/1200px-Julia_set_%28C_%3D_0.285_%2B_0.01i%29.jpg", link: "/2d/julia", title: "Julia Set" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Menger_sponge_%28Level_4%29.jpg", link: "/3d/menger-sponge", title: "Menger Sponge" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Von_Koch_curve.gif", link: "/2d/koch-snowflake", title: "Koch Snowflake" },
-    { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sierpinski_triangle.svg/1200px-Sierpinski_triangle.svg.png", link: "/2d/sierpinski", title: "Sierpinski Triangle" }
+const DEFAULT_CAROUSEL_ITEMS = [
+    { url: PlainMandelbrot, link: "/2d/mandelbrot", title: "Mandelbrot Set" },
+    { url: PlainJulia, link: "/2d/julia", title: "Julia Set" },
+    { url: PlainBurningShip, link: "/2d/burning-ship", title: "Burning Ship" },
+    { url: PlainMandelbulb, link: "/3d/mandelbulb", title: "Mandelbulb" },
+    { url: SierpinskiTriangle, link: "/2d/sierpinski", title: "Sierpinski Triangle" },
+    { url: ApollonianGasket, link: "/", title: "Apollonian Gasket" }
 ];
 
 function FractalDimTemplate({
     title,
     description,
-    carouselItems,
+    carouselItems = DEFAULT_CAROUSEL_ITEMS,
     sampleImages, // For now assuming this might be an array or just children
     subHeading,
     cards, // Kept cards prop
